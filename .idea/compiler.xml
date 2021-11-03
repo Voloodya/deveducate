@@ -10,6 +10,12 @@
         <module name="deveducate.deveducate-core.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.6" />
+    <bytecodeTargetLevel target="1.6">
+      <module name="deveducate.deveducate-core.main~1" target="1.8" />
+      <module name="deveducate.deveducate-core.test~1" target="1.8" />
+      <module name="ru.cinimex.deveducate" target="1.8" />
+      <module name="ru.cinimex.deveducate.main" target="1.8" />
+      <module name="ru.cinimex.deveducate.test" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
