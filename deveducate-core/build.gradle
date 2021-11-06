@@ -4,9 +4,8 @@ plugins {
     id 'java'
 }
 
-group = 'ru.cinimex'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+task prepareKotlinBuildScriptModel {
+}
 
 configurations {
     compileOnly {

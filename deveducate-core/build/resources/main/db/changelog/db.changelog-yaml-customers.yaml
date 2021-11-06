@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-customers
+      author: vlutsenko
+      preConditions:
+        - onFail: HALT
+          not:
+            tableExists:
+              tableName: Customers
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: customer_pkey
+                  name: CUSTOMER_ID
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: CUST_FIRST_NAME
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: CUST_LAST_NAME
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: PHONE_NUMBER1
+                  type: VARCHAR(12)
+              - column:
+                  constraints:
+                    nullable: TRUE
+                  name: PHONE_NUMBER2
+                  type: VARCHAR(12)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: CUST_STREET_ADDRESS1
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: TRUE
+                  name: CUST_STREET_ADDRESS2
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: FALSE
+                  name: CUST_CITY
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: FALSE
+                  name: CUST_POSTAL_CODE
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: CREDIT_LIMIT
+                  type: INT
+              - column:
+                  name: CUST_EMAIL
+                  type: TEXT
+            tableName: Customers
