@@ -1,2 +1,0 @@
-ru/cinimex/deveducate/DeveducateCoreApplicationTests.java
- ru.cinimex.deveducate.DeveducateCoreApplicationTests

@@ -11,6 +11,7 @@ sonarqube {
     }
 }
 
+
 repositories {
     mavenCentral()
 }
