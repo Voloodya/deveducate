@@ -2,6 +2,7 @@ package ru.cinimex.deveducate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 // Класс конфигурации и запуска приложения.
 // Spring Boot поддерживает новую аннотацию @SpringBootApplication, которая эквивалентна использованию @Configuration, @EnableAutoConfiguration и @ComponentScan
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //        MyJmsConfig(from the external config)
 
 @SpringBootApplication
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class DeveducateCoreApplication {
 
     public static void main(String[] args) {
