@@ -23,7 +23,6 @@ configurations {
 }
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -51,7 +50,9 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.security:spring-security-test'
     //compile 'joda-time:joda-time:2.2'
-    compileOnly 'org.springdoc:springdoc-openapi-ui:1.5.12'
+//    implementation 'org.springdoc:springdoc-openapi-data-rest:1.4.6'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.6'
+
 }
 
 dependencyManagement {
