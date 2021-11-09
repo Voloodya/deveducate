@@ -1,24 +1,18 @@
 package ru.cinimex.deveducate.rest.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
 @Setter
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class Life {
 
-    private boolean Alive;
+    @NonNull private boolean Alive;
     private Date Date;
-
-    public Life() {
-    }
-
-    public Life(boolean alive, java.util.Date date) {
-        Alive = alive;
-        Date = date;
-    }
 
     @Override
     public boolean equals(Object obj){

@@ -5,6 +5,9 @@ plugins {
     id 'application'
 }
 
+def springfoxVersion = '3.0.0'
+def springfoxUiVersion = '2.9.2'
+
 task prepareKotlinBuildScriptModel {
 }
 
@@ -20,6 +23,7 @@ configurations {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -46,6 +50,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    //compile 'joda-time:joda-time:2.2'
+    compileOnly 'org.springdoc:springdoc-openapi-ui:1.5.12'
 }
 
 dependencyManagement {
