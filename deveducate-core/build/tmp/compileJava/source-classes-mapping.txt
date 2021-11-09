@@ -1,0 +1,9 @@
+ru/cinimex/deveducate/DeveducateCoreApplication.java
+ ru.cinimex.deveducate.DeveducateCoreApplication
+ru/cinimex/deveducate/rest/DTO/Life.java
+ ru.cinimex.deveducate.rest.DTO.Life
+ ru.cinimex.deveducate.rest.DTO.Life$LifeBuilder
+ru/cinimex/deveducate/rest/controller/LifeController.java
+ ru.cinimex.deveducate.rest.controller.LifeController
+ru/cinimex/deveducate/security/SecurityConfig.java
+ ru.cinimex.deveducate.security.SecurityConfig

@@ -5,11 +5,9 @@ plugins {
     id 'application'
 }
 
-def springfoxVersion = '3.0.0'
-def springfoxUiVersion = '2.9.2'
-
-task prepareKotlinBuildScriptModel {
-}
+group = 'com.example'
+version = ''
+sourceCompatibility = '1.8'
 
 bootJar {
     baseName 'deveducate'
@@ -50,9 +48,8 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation 'org.springframework.security:spring-security-test'
     //compile 'joda-time:joda-time:2.2'
-//    implementation 'org.springdoc:springdoc-openapi-data-rest:1.4.6'
-    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.4.6'
-
+    //compile() 'org.springdoc:springdoc-openapi-data-rest:1.4.6'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.12'
 }
 
 dependencyManagement {

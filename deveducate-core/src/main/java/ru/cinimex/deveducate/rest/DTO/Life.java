@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder(toBuilder = true)
 public class Life {
 
-    @NonNull private boolean Alive;
+    private boolean Alive;
     private Date Date;
 
     @Override
