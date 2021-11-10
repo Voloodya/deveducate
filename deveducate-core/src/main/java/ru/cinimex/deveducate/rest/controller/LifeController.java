@@ -10,7 +10,6 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/")
-
 public class LifeController {
 
     @GetMapping(path = "/alive", produces = "application/json")

@@ -3,18 +3,20 @@ package ru.cinimex.deveducate.dal.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Customers")
+@Table(name = "Customers", schema = "vlutsenko")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CUSTOMER_ID", nullable = false)
     private Integer CustomerId;
 
@@ -51,6 +53,5 @@ public class Customer {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "Customer")
     private Set<Order> orders;
 
-    public Customer() {
-    }
+
 }

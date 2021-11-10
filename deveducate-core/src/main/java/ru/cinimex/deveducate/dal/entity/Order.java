@@ -3,19 +3,21 @@ package ru.cinimex.deveducate.dal.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Orders")
+@Table(name = "Orders", schema = "vlutsenko")
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID", nullable = false)
     private Integer OrderId;
 
@@ -34,6 +36,4 @@ public class Order {
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer Customer;
 
-    public Order() {
-    }
 }
