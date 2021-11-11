@@ -3,9 +3,9 @@
 
 # User-specific stuff
 
-.idea
-deveducate-core/build
-.gradle
+.idea/
+deveducate-core/build/
+.gradle/
 
 # AWS User-specific
 .idea/**/aws.xml
