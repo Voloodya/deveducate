@@ -6,7 +6,7 @@ databaseChangeLog:
         - onFail: HALT
           not:
             tableExists:
-              tableName: Sellers
+              tableName: sellers
       changes:
         - createTable:
             columns:
@@ -20,37 +20,37 @@ databaseChangeLog:
                   type: INT
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: SELLER_NAME
                   type: VARCHAR(255)
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: PASSWORD
                   type: VARCHAR(400)
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: CREATE_ON
                   type: TIMESTAMP
               - column:
                   constraints:
-                    nullable: FALSE
+                    nullable: true
                   name: QUOTA
                   type: INT
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: PRODUCT
                   type: TEXT
               - column:
                   constraints:
-                    nullable: FALSE
+                    nullable: true
                   name: EXPIRES_ON
                   type: TIMESTAMP
               - column:
                   constraints:
-                    nullable: FALSE
+                    nullable: true
                   name: ADMIN_USER
                   type: TEXT
-            tableName: Sellers
+            tableName: sellers

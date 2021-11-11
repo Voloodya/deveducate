@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/db.changelog-yaml-customers.yaml
   - include:
       file: db/changelog/db.changelog-yaml-orders.yaml
+  - include:
+      file: db/changelog/db.changelog-yaml-load.yaml

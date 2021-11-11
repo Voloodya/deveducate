@@ -1,5 +1,6 @@
 spring:
   datasource:
+    platform: postgres
     url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
     username: 'vlutsenko'
     password: 'vlutsenko'

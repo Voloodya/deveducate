@@ -6,7 +6,7 @@ databaseChangeLog:
         - onFail: HALT
           not:
             tableExists:
-              tableName: Customers
+              tableName: customers
       changes:
         - createTable:
             columns:
@@ -20,17 +20,17 @@ databaseChangeLog:
                   type: INT
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: CUST_FIRST_NAME
                   type: TEXT
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: CUST_LAST_NAME
                   type: TEXT
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: PHONE_NUMBER1
                   type: VARCHAR(12)
               - column:
@@ -40,7 +40,7 @@ databaseChangeLog:
                   type: VARCHAR(12)
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: CUST_STREET_ADDRESS1
                   type: TEXT
               - column:
@@ -50,20 +50,20 @@ databaseChangeLog:
                   type: TEXT
               - column:
                   constraints:
-                    nullable: FALSE
+                    nullable: true
                   name: CUST_CITY
                   type: TEXT
               - column:
                   constraints:
-                    nullable: FALSE
+                    nullable: true
                   name: CUST_POSTAL_CODE
                   type: TEXT
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: CREDIT_LIMIT
                   type: INT
               - column:
                   name: CUST_EMAIL
                   type: TEXT
-            tableName: Customers
+            tableName: customers

@@ -6,7 +6,7 @@ databaseChangeLog:
         - onFail: HALT
           not:
             tableExists:
-              tableName: Orders
+              tableName: orders
       changes:
         - createTable:
             columns:
@@ -34,7 +34,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_orders_sellers
-                    referencedTableName: Sellers
+                    referencedTableName: sellers
                     referencedColumnNames: SELLER_ID
                     onDelete: SET NULL
                     onUpdate: RESTRICT
@@ -44,7 +44,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     foreignKeyName: fk_orders_customers
-                    referencedTableName: Customers
+                    referencedTableName: customers
                     referencedColumnNames: CUSTOMER_ID
                     onDelete: SET NULL
                     onUpdate: RESTRICT
@@ -56,4 +56,4 @@ databaseChangeLog:
 #                  constraintName: fk_orders_customers
 #                  onDelete: SET NULL
 #                  onUpdate: RESTRICT
-            tableName: Orders
+            tableName: orders

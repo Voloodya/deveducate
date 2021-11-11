@@ -1,23 +1,53 @@
-ru/cinimex/deveducate/DeveducateCoreApplication.java
- ru.cinimex.deveducate.DeveducateCoreApplication
-ru/cinimex/deveducate/security/SecurityConfig.java
- ru.cinimex.deveducate.security.SecurityConfig
-ru/cinimex/deveducate/dal/entity/Customer.java
- ru.cinimex.deveducate.dal.entity.Customer
- ru.cinimex.deveducate.dal.entity.Customer$CustomerBuilder
-ru/cinimex/deveducate/rest/controller/LifeController.java
- ru.cinimex.deveducate.rest.controller.LifeController
-ru/cinimex/deveducate/rest/DTO/Life.java
- ru.cinimex.deveducate.rest.DTO.Life
- ru.cinimex.deveducate.rest.DTO.Life$LifeBuilder
-ru/cinimex/deveducate/dal/entity/Order.java
- ru.cinimex.deveducate.dal.entity.Order
- ru.cinimex.deveducate.dal.entity.Order$OrderBuilder
-ru/cinimex/deveducate/dal/entity/Seller.java
- ru.cinimex.deveducate.dal.entity.Seller
+ru/cinimex/deveducate/rest/dto/SellerDto.java
+ ru.cinimex.deveducate.rest.dto.SellerDto
+ ru.cinimex.deveducate.rest.dto.SellerDto$SellerDtoBuilder
 ru/cinimex/deveducate/dal/repository/SellerRepository.java
  ru.cinimex.deveducate.dal.repository.SellerRepository
+ru/cinimex/deveducate/DeveducateCoreApplication.java
+ ru.cinimex.deveducate.DeveducateCoreApplication
+ru/cinimex/deveducate/rest/dto/LifeDto.java
+ ru.cinimex.deveducate.rest.dto.LifeDto
+ ru.cinimex.deveducate.rest.dto.LifeDto$LifeDtoBuilder
+ru/cinimex/deveducate/service/CustomerService.java
+ ru.cinimex.deveducate.service.CustomerService
+ru/cinimex/deveducate/dal/entity/OrderEntity.java
+ ru.cinimex.deveducate.dal.entity.OrderEntity
+ ru.cinimex.deveducate.dal.entity.OrderEntity$OrderEntityBuilder
+ru/cinimex/deveducate/rest/controller/LifeController.java
+ ru.cinimex.deveducate.rest.controller.LifeController
+ru/cinimex/deveducate/security/SecurityConfig.java
+ ru.cinimex.deveducate.security.SecurityConfig
+ru/cinimex/deveducate/rest/dto/CustomerDto.java
+ ru.cinimex.deveducate.rest.dto.CustomerDto
+ ru.cinimex.deveducate.rest.dto.CustomerDto$CustomerDtoBuilder
+ru/cinimex/deveducate/dal/entity/CustomerEntity.java
+ ru.cinimex.deveducate.dal.entity.CustomerEntity
+ ru.cinimex.deveducate.dal.entity.CustomerEntity$CustomerEntityBuilder
 ru/cinimex/deveducate/dal/repository/CustomerRepository.java
  ru.cinimex.deveducate.dal.repository.CustomerRepository
+ru/cinimex/deveducate/service/CustomerServiceImpl.java
+ ru.cinimex.deveducate.service.CustomerServiceImpl
 ru/cinimex/deveducate/dal/repository/OrderRepository.java
  ru.cinimex.deveducate.dal.repository.OrderRepository
+ru/cinimex/deveducate/rest/dto/OrderDto.java
+ ru.cinimex.deveducate.rest.dto.OrderDto
+ ru.cinimex.deveducate.rest.dto.OrderDto$OrderDtoBuilder
+ru/cinimex/deveducate/dal/entity/SellerEntity.java
+ ru.cinimex.deveducate.dal.entity.SellerEntity
+ ru.cinimex.deveducate.dal.entity.SellerEntity$SellerEntityBuilder
+ru/cinimex/deveducate/configuration/LoadDatabase.java
+ ru.cinimex.deveducate.configuration.LoadDatabase
+ru/cinimex/deveducate/service/OrderServiceImpl.java
+ ru.cinimex.deveducate.service.OrderServiceImpl
+ru/cinimex/deveducate/service/SellerService.java
+ ru.cinimex.deveducate.service.SellerService
+ru/cinimex/deveducate/service/OrderService.java
+ ru.cinimex.deveducate.service.OrderService
+ru/cinimex/deveducate/service/SellerServiceImpl.java
+ ru.cinimex.deveducate.service.SellerServiceImpl
+ru/cinimex/deveducate/rest/controller/OrderController.java
+ ru.cinimex.deveducate.rest.controller.OrderController
+ru/cinimex/deveducate/rest/controller/SellerController.java
+ ru.cinimex.deveducate.rest.controller.SellerController
+ru/cinimex/deveducate/rest/controller/CustomerController.java
+ ru.cinimex.deveducate.rest.controller.CustomerController
