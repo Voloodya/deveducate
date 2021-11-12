@@ -45,7 +45,7 @@ public class SellerEntity {
     @Column(name = "ADMIN_USER", nullable = true)
     private String adminUser;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "seller")
     private Set<OrderEntity> orders;
 
 }

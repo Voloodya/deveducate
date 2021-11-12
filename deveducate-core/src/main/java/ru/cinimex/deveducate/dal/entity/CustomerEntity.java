@@ -50,7 +50,7 @@ public class CustomerEntity {
     @Column(name = "CUST_EMAIL", nullable = true, unique = false)
     private String  custEmail;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "customer")
     private Set<OrderEntity> orders;
 
 

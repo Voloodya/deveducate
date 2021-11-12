@@ -2,6 +2,8 @@ package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
 import ru.cinimex.deveducate.service.SellerService;
@@ -17,25 +19,29 @@ public class SellerController {
     private SellerService sellerService;
 
     @GetMapping("/{id}")
-    public SellerDto get(int id){
+    public SellerDto get(@PathVariable int id){
 
-        SellerDto sellerDto = null;
+        SellerDto sellerDto = sellerService.get(id);
 
         return sellerDto;
     }
 
     @PostMapping()
     public SellerDto save(SellerDto sellerDto){
-
+        if(sellerDto != null) {
+            sellerDto = sellerService.save(sellerDto);
+        }else{
+            sellerDto = null;
+        }
         return sellerDto;
     }
 
     @GetMapping("/getAll")
     public List<SellerDto> getAll(){
 
-        List<SellerDto> sellerDto = null;
+        List<SellerDto> sellerDtoList = sellerService.getAll();
 
-        return  sellerDto;
+        return  sellerDtoList;
     }
 
     @PutMapping()
@@ -45,7 +51,12 @@ public class SellerController {
     }
 
     @DeleteMapping("/{id}")
-    public void remove(int id){
-
+    public ResponseEntity remove(@PathVariable int id){
+        try {
+            sellerService.remove(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }

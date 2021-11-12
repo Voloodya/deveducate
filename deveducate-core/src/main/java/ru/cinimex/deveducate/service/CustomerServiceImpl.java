@@ -29,7 +29,6 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
 
     @Override
     public CustomerDto get(int id) {
-
         Optional<CustomerEntity> customerEntityOpt = customerRepository.findById(id);
         CustomerDto customerDto = customerEntityOpt.isPresent() ? objectEntityMapsToObjectDto(customerEntityOpt.get()) : null;
 

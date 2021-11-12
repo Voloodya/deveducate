@@ -2,6 +2,8 @@ package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
 import ru.cinimex.deveducate.service.OrderService;
@@ -16,10 +18,10 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/{id}")
-    public OrderDto get(int id){
+    @GetMapping("{id}")
+    public OrderDto get(@PathVariable int id){
 
-        OrderDto orderDto = null;
+        OrderDto orderDto = orderService.get(id);
 
         return orderDto;
     }
@@ -32,7 +34,7 @@ public class OrderController {
 
     @GetMapping("/getAll")
     public List<OrderDto> getAll(){
-        List<OrderDto> orderDtoList = null;
+        List<OrderDto> orderDtoList = orderService.getAll();
 
         return  orderDtoList;
     }
@@ -43,8 +45,14 @@ public class OrderController {
         return orderDto;
     }
 
-    @DeleteMapping("/{id}")
-    public void remove(int id){
+    @DeleteMapping("{id}")
+    public ResponseEntity remove(@PathVariable int id){
+        try {
+            orderService.remove(id);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
     }
 }

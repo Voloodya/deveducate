@@ -28,11 +28,11 @@ public class OrderEntity {
     @Column(name = "ORDER_TOTAL", nullable = false)
     private Integer orderTotal;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SELLER_ID")
     private SellerEntity seller;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_ID")
     private CustomerEntity customer;
 
