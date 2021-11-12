@@ -3,8 +3,8 @@
 
 # User-specific stuff
 
-.idea/
-deveducate-core/build/
+.idea
+deveducate-core/build
 .gradle/
 
 # AWS User-specific

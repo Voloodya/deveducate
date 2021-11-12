@@ -1,14 +1,14 @@
 package ru.cinimex.deveducate.rest.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class CustomerDto {
 
     private Integer customerId;

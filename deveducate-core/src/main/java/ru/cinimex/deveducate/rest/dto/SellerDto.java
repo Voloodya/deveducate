@@ -1,8 +1,6 @@
 package ru.cinimex.deveducate.rest.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -10,23 +8,25 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class SellerDto {
 
-    private Integer SellerId;
+    private Integer sellerId;
 
-    private  String SellerName;
+    private  String sellerName;
 
-    private  String Password;
+    private  String password;
 
-    private Date CreateOn;
+    private Date createOn;
 
-    private Integer Quota;
+    private Integer quota;
 
-    private  String Product;
+    private  String product;
 
-    private Date ExpiresOn;
+    private Date expiresOn;
 
-    private  String AdminUser;
+    private  String adminUser;
 
     private Set<OrderDto> orders;
 

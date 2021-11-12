@@ -1,14 +1,19 @@
 package ru.cinimex.deveducate.service;
 
 import org.springframework.stereotype.Service;
-import ru.cinimex.deveducate.dal.entity.CustomerEntity;
-import ru.cinimex.deveducate.dal.entity.SellerEntity;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
+import java.util.List;
 
 @Service
 public interface CustomerService {
 
-    public CustomerDto customerEntityMapsToCustomerDto(CustomerEntity customerEntity);
+    public CustomerDto get(int id);
 
-    public  CustomerEntity customerDtoMapsToCustomerEntity(CustomerDto customerDto);
+    public CustomerDto save(CustomerDto customerDto);
+
+    public List<CustomerDto> getAll();
+
+    public CustomerDto update(CustomerDto customerDto);
+
+    public void remove(int id);
 }

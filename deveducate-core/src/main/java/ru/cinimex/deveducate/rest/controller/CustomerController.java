@@ -19,7 +19,7 @@ public class CustomerController {
     @GetMapping("/{id}")
     public CustomerDto get(int id){
 
-        CustomerDto customerDto = null;
+        CustomerDto customerDto = customerService.get(id);
 
         return customerDto;
     }
@@ -27,13 +27,13 @@ public class CustomerController {
     @PostMapping()
     public CustomerDto save(CustomerDto customerDto){
 
-        return customerDto;
+        return customerDto = customerService.save(customerDto);
     }
 
     @GetMapping("/getAll")
     public List<CustomerDto> getAll(){
 
-        List<CustomerDto> customerDto = null;
+        List<CustomerDto> customerDto = customerService.getAll();
 
         return  customerDto;
     }
@@ -41,6 +41,8 @@ public class CustomerController {
     @PutMapping()
     public CustomerDto update(CustomerDto customerDto){
 
+        CustomerDto customerDtoUpdate = customerService.update(customerDto);
+        
         return customerDto;
     }
 
