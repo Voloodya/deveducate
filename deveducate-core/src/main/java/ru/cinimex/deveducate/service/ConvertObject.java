@@ -5,7 +5,7 @@ import ru.cinimex.deveducate.rest.dto.OrderDto;
 
 public interface ConvertObject<T, J> {
 
-    public J objectEntityMapsToObjectDto(T objectEntity);
+    J objectEntityMapsToObjectDto(T objectEntity);
 
-    public T objectDtoMapsToObjectEntity(J objectDto);
+    T objectDtoMapsToObjectEntity(J objectDto);
 }

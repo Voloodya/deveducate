@@ -11,7 +11,7 @@ import ru.cinimex.deveducate.service.CustomerService;
 import java.util.List;
 
 @Api("API для объектов Покупатели")
-@RestController
+@RestControllerAdvice
 @RequestMapping("/customers")
 public class CustomerController {
 
@@ -19,42 +19,37 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/{id}")
-    public CustomerDto get(@PathVariable int id){
+    public ResponseEntity<CustomerDto> get(@PathVariable int id){
 
-        CustomerDto customerDto = customerService.get(id);
-        return customerDto;
+        return new ResponseEntity<>(customerService.get(id),HttpStatus.OK);
     }
 
     @PostMapping()
-    public CustomerDto save(CustomerDto customerDto){
+    public ResponseEntity<CustomerDto> save(CustomerDto customerDto){
 
         if(customerDto != null) {
              customerDto = customerService.save(customerDto);
         }else{
-            customerDto = null;
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return customerDto;
+        return new ResponseEntity<>(customerDto, HttpStatus.OK) ;
     }
 
     @GetMapping("/getAll")
-    public List<CustomerDto> getAll(){
+    public ResponseEntity<List<CustomerDto>> getAll(){
 
-        List<CustomerDto> customerDto = customerService.getAll();
-
-        return  customerDto;
+        return new ResponseEntity<>(customerService.getAll(),HttpStatus.OK);
     }
 
     @PutMapping()
-    public CustomerDto update(CustomerDto customerDto){
+    public ResponseEntity<CustomerDto> update(CustomerDto customerDto){
 
-        CustomerDto customerDtoUpdate;
         if(customerDto != null) {
-            customerDtoUpdate = customerService.update(customerDto);
+            return new ResponseEntity<>(customerDto, HttpStatus.OK);
         }
         else{
-            customerDtoUpdate = null;
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return customerDto;
     }
 
     @DeleteMapping("/{id}")

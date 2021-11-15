@@ -9,13 +9,13 @@ import java.util.List;
 @Service
 public interface SellerService {
 
-    public SellerDto get(int id);
+    SellerDto get(int id);
 
-    public SellerDto save(SellerDto sellerDto);
+    SellerDto save(SellerDto sellerDto);
 
-    public List<SellerDto> getAll();
+    List<SellerDto> getAll();
 
-    public SellerDto update(SellerDto sellerDto);
+    SellerDto update(SellerDto sellerDto);
 
-    public void remove(int id);
+    void remove(int id);
 }

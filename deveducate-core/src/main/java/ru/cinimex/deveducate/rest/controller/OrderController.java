@@ -11,7 +11,7 @@ import ru.cinimex.deveducate.service.OrderService;
 import java.util.List;
 
 @Api("API для объектов Ордер")
-@RestController
+@RestControllerAdvice
 @RequestMapping("/orders")
 public class OrderController {
 
@@ -19,38 +19,35 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("{id}")
-    public OrderDto get(@PathVariable int id){
+    public ResponseEntity<OrderDto> get(@PathVariable int id) {
 
-        OrderDto orderDto = orderService.get(id);
-
-        return orderDto;
+        return new ResponseEntity<>(orderService.get(id), HttpStatus.OK);
     }
 
     @PostMapping()
-    public OrderDto save(OrderDto orderDto){
+    public ResponseEntity<OrderDto> save(OrderDto orderDto) {
 
-        return orderDto;
+        return new ResponseEntity<>(orderService.save(orderDto), HttpStatus.OK);
     }
 
     @GetMapping("/getAll")
-    public List<OrderDto> getAll(){
-        List<OrderDto> orderDtoList = orderService.getAll();
+    public ResponseEntity<List<OrderDto>> getAll() {
 
-        return  orderDtoList;
+        return new ResponseEntity<>(orderService.getAll(), HttpStatus.OK);
     }
 
     @PutMapping()
-    public OrderDto update(OrderDto orderDto){
+    public ResponseEntity<OrderDto> update(OrderDto orderDto) {
 
-        return orderDto;
+        return new ResponseEntity<>(orderService.update(orderDto), HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity remove(@PathVariable int id){
+    public ResponseEntity remove(@PathVariable int id) {
         try {
             orderService.remove(id);
             return new ResponseEntity(HttpStatus.OK);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 

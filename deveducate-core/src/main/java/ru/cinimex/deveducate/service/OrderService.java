@@ -8,13 +8,13 @@ import java.util.List;
 @Service
 public interface OrderService {
 
-    public OrderDto get(int id);
+    OrderDto get(int id);
 
-    public OrderDto save(OrderDto orderDto);
+    OrderDto save(OrderDto orderDto);
 
-    public List<OrderDto> getAll();
+    List<OrderDto> getAll();
 
-    public OrderDto update(OrderDto orderDto);
+    OrderDto update(OrderDto orderDto);
 
-    public void remove(int id);
+    void remove(int id);
 }

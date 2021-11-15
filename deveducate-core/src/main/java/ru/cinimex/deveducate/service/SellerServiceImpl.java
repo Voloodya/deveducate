@@ -1,32 +1,26 @@
 package ru.cinimex.deveducate.service;
 
+import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 import ru.cinimex.deveducate.dal.entity.SellerEntity;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
-import ru.cinimex.deveducate.rest.dto.CustomerDto;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@RequiredArgsConstructor
 @Service
 public class SellerServiceImpl implements SellerService, ConvertObject<SellerEntity, SellerDto>{
 
     private MapperFactory mapperFactory;
 
-    @Autowired
     private SellerRepository sellerRepository;
-
-    public SellerServiceImpl(){
-        mapperFactory = new DefaultMapperFactory.Builder().build();
-    }
 
     @Override
     public SellerDto get(int id) {

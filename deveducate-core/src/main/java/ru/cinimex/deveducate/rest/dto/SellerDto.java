@@ -14,19 +14,19 @@ public class SellerDto {
 
     private Integer sellerId;
 
-    private  String sellerName;
+    private String sellerName;
 
-    private  String password;
+    private String password;
 
     private Date createOn;
 
     private Integer quota;
 
-    private  String product;
+    private String product;
 
     private Date expiresOn;
 
-    private  String adminUser;
+    private String adminUser;
 
     private Set<OrderDto> orders;
 

@@ -15,18 +15,18 @@ public class LifeDto {
     private Date date;
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
 
-        if(obj == null || obj.getClass() != this.getClass()) return false;
+        if (obj == null || obj.getClass() != this.getClass()) return false;
 
         LifeDto life = (LifeDto) obj;
 
-        if(this.alive == life.alive && this.getDate() == life.getDate()) return  true;
+        if (this.alive == life.alive && this.getDate() == life.getDate()) return true;
         else return false;
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + (this.alive ? "true".hashCode() : "false".hashCode());

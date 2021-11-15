@@ -22,30 +22,30 @@ public class SellerEntity {
     @Column(name = "SELLER_ID", nullable = false)
     private Integer sellerId;
 
-    @Column(name = "SELLER_NAME", nullable = true)
+    @Column(name = "SELLER_NAME")
     private String sellerName;
 
-    @Column(name = "PASSWORD", nullable = true)
+    @Column(name = "PASSWORD")
     private String password;
 
     @Column(name = "CREATE_ON")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createOn;
 
-    @Column(name = "QUOTA", nullable = true)
+    @Column(name = "QUOTA")
     private Integer quota;
 
-    @Column(name = "PRODUCT", nullable = true)
+    @Column(name = "PRODUCT")
     private String product;
 
     @Column(name = "EXPIRES_ON")
     @Temporal(TemporalType.TIMESTAMP)
     private Date expiresOn;
 
-    @Column(name = "ADMIN_USER", nullable = true)
+    @Column(name = "ADMIN_USER")
     private String adminUser;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "seller")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "seller")
     private Set<OrderEntity> orders;
 
 }

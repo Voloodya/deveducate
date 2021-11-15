@@ -1,5 +1,7 @@
 package ru.cinimex.deveducate.rest.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +15,9 @@ import java.util.Date;
 public class LifeController {
 
     @GetMapping(path = "/alive", produces = "application/json")
-    public LifeDto alive(){
+    public ResponseEntity<LifeDto> alive(){
 
-        LifeDto life = new LifeDto(true, new Date());
-
-        return life;
+        return new ResponseEntity<>(new LifeDto(true, new Date()), HttpStatus.OK);
     }
 
 }

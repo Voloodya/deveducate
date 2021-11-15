@@ -25,7 +25,7 @@ public class OrderEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderTimestam;
 
-    @Column(name = "ORDER_TOTAL", nullable = false)
+    @Column(name = "ORDER_TOTAL")
     private Integer orderTotal;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package ru.cinimex.deveducate.service;
 
+import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
@@ -13,18 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
+@RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity, OrderDto>{
 
     private MapperFactory mapperFactory;
 
-    @Autowired
     private OrderRepository orderRepository;
-
-    public OrderServiceImpl(){
-        mapperFactory = new DefaultMapperFactory.Builder().build();
-    }
 
     @Override
     public OrderDto get(int id) {

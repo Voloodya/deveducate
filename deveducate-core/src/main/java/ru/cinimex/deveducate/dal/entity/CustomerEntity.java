@@ -20,35 +20,35 @@ public class CustomerEntity {
     @Column(name = "CUSTOMER_ID", nullable = false)
     private Integer customerId;
 
-    @Column(name = "CUST_FIRST_NAME", nullable = true, unique = false)
+    @Column(name = "CUST_FIRST_NAME")
     private String custFirstName;
 
-    @Column(name = "CUST_LAST_NAME", nullable = true, unique = false)
-    private String  custLastName;
+    @Column(name = "CUST_LAST_NAME")
+    private String custLastName;
 
-    @Column(name = "PHONE_NUMBER1", nullable = true, unique = false)
-    private String  phoneNumber1;
+    @Column(name = "PHONE_NUMBER1")
+    private String phoneNumber1;
 
-    @Column(name = "PHONE_NUMBER2", nullable = true, unique = false)
-    private String  phoneNumber2;
+    @Column(name = "PHONE_NUMBER2")
+    private String phoneNumber2;
 
-    @Column(name = "CUST_STREET_ADDRESS1", nullable = true, unique = false)
-    private String  custStreetADddress1;
+    @Column(name = "CUST_STREET_ADDRESS1")
+    private String custStreetADddress1;
 
-    @Column(name = "CUST_STREET_ADDRESS2", nullable = true, unique = false)
-    private String  custStreetADddress2;
+    @Column(name = "CUST_STREET_ADDRESS2")
+    private String custStreetADddress2;
 
-    @Column(name = "CUST_CITY", nullable = true, unique = false)
-    private String  custSity;
+    @Column(name = "CUST_CITY")
+    private String custSity;
 
-    @Column(name = "CUST_POSTAL_CODE", nullable = true, unique = false)
-    private String  custPostalCode;
+    @Column(name = "CUST_POSTAL_CODE")
+    private String custPostalCode;
 
-    @Column(name = "CREDIT_LIMIT", nullable = true, unique = false)
-    private Integer  creditLimit;
+    @Column(name = "CREDIT_LIMIT")
+    private Integer creditLimit;
 
-    @Column(name = "CUST_EMAIL", nullable = true, unique = false)
-    private String  custEmail;
+    @Column(name = "CUST_EMAIL")
+    private String custEmail;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "customer")
     private Set<OrderEntity> orders;

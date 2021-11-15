@@ -11,7 +11,7 @@ import ru.cinimex.deveducate.service.SellerService;
 import java.util.List;
 
 @Api("API для объектов Продавцы")
-@RestController
+@RestControllerAdvice
 @RequestMapping("/sellers")
 public class SellerController {
 
@@ -19,43 +19,38 @@ public class SellerController {
     private SellerService sellerService;
 
     @GetMapping("/{id}")
-    public SellerDto get(@PathVariable int id){
+    public ResponseEntity<SellerDto> get(@PathVariable int id) {
 
-        SellerDto sellerDto = sellerService.get(id);
-
-        return sellerDto;
+        return new ResponseEntity<>(sellerService.get(id), HttpStatus.OK);
     }
 
     @PostMapping()
-    public SellerDto save(SellerDto sellerDto){
-        if(sellerDto != null) {
-            sellerDto = sellerService.save(sellerDto);
-        }else{
-            sellerDto = null;
+    public ResponseEntity<SellerDto> save(SellerDto sellerDto) {
+        if (sellerDto != null) {
+            return new ResponseEntity<>(sellerService.save(sellerDto), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return sellerDto;
     }
 
     @GetMapping("/getAll")
-    public List<SellerDto> getAll(){
+    public ResponseEntity<List<SellerDto>> getAll() {
 
-        List<SellerDto> sellerDtoList = sellerService.getAll();
-
-        return  sellerDtoList;
+        return new ResponseEntity<>(sellerService.getAll(), HttpStatus.OK);
     }
 
     @PutMapping()
-    public SellerDto update(SellerDto sellerDto){
+    public ResponseEntity<SellerDto> update(SellerDto sellerDto) {
 
-        return sellerDto;
+        return new ResponseEntity<>(sellerService.update(sellerDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable int id){
+    public ResponseEntity remove(@PathVariable int id) {
         try {
             sellerService.remove(id);
             return new ResponseEntity(HttpStatus.OK);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
