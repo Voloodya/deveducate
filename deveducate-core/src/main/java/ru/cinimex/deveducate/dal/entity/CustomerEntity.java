@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -33,13 +33,13 @@ public class CustomerEntity {
     private String phoneNumber2;
 
     @Column(name = "CUST_STREET_ADDRESS1")
-    private String custStreetADddress1;
+    private String custStreetAddress1;
 
     @Column(name = "CUST_STREET_ADDRESS2")
-    private String custStreetADddress2;
+    private String custStreetAddress2;
 
     @Column(name = "CUST_CITY")
-    private String custSity;
+    private String custCity;
 
     @Column(name = "CUST_POSTAL_CODE")
     private String custPostalCode;
@@ -51,7 +51,7 @@ public class CustomerEntity {
     private String custEmail;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "customer")
-    private Set<OrderEntity> orders;
+    private List<OrderEntity> orders;
 
 
 }

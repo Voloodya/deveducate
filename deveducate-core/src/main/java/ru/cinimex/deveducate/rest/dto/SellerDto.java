@@ -3,6 +3,7 @@ package ru.cinimex.deveducate.rest.dto;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -12,9 +13,9 @@ import java.util.Set;
 @Setter
 public class SellerDto {
 
-    private Integer sellerId;
+    private Integer id;
 
-    private String sellerName;
+    private String name;
 
     private String password;
 
@@ -24,10 +25,8 @@ public class SellerDto {
 
     private String product;
 
-    private Date expiresOn;
+    private Date updateOn;
 
     private String adminUser;
-
-    private Set<OrderDto> orders;
 
 }

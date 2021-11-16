@@ -2,8 +2,6 @@ package ru.cinimex.deveducate.rest.dto;
 
 import lombok.*;
 
-import java.util.Set;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,28 +9,26 @@ import java.util.Set;
 @Setter
 public class CustomerDto {
 
-    private Integer customerId;
+    private Integer id;
 
-    private String custFirstName;
+    private String firstName;
 
-    private String custLastName;
+    private String lastName;
 
-    private String phoneNumber1;
+    private String phone1;
 
-    private String phoneNumber2;
+    private String phone2;
 
-    private String custStreetADddress1;
+    private String street1;
 
-    private String custStreetADddress2;
+    private String street2;
 
-    private String custSity;
+    private String city;
 
-    private String custPostalCode;
+    private String postal;
 
     private Integer creditLimit;
 
-    private String custEmail;
-
-    private Set<OrderDto> orders;
+    private String email;
 
 }

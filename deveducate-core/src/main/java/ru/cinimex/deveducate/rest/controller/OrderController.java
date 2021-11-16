@@ -1,13 +1,19 @@
 package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
+import lombok.SneakyThrows;
+import org.springdoc.api.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ServerErrorException;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
 import ru.cinimex.deveducate.service.OrderService;
 
+import javax.persistence.EntityNotFoundException;
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @Api("API для объектов Ордер")
@@ -19,37 +25,73 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("{id}")
-    public ResponseEntity<OrderDto> get(@PathVariable int id) {
+    public OrderDto get(@PathVariable int id) throws ValidationException {
 
-        return new ResponseEntity<>(orderService.get(id), HttpStatus.OK);
+        if(id > 0) {
+            return orderService.get(id);
+        }else {
+            throw new ValidationException("");
+        }
     }
 
     @PostMapping()
-    public ResponseEntity<OrderDto> save(OrderDto orderDto) {
+    public OrderDto save(OrderDto orderDto) throws ValidationException {
 
-        return new ResponseEntity<>(orderService.save(orderDto), HttpStatus.OK);
+        if(orderDto != null) {
+            return orderService.save(orderDto);
+        }else{
+            throw new ValidationException("");
+        }
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<OrderDto>> getAll() {
-
-        return new ResponseEntity<>(orderService.getAll(), HttpStatus.OK);
+    public List<OrderDto> getAll() {
+        return orderService.getAll();
     }
 
     @PutMapping()
-    public ResponseEntity<OrderDto> update(OrderDto orderDto) {
+    public OrderDto update(OrderDto orderDto) throws ValidationException {
 
-        return new ResponseEntity<>(orderService.update(orderDto), HttpStatus.OK);
+        if(orderDto != null && orderDto.getOrderId() != null) {
+            return orderService.update(orderDto);
+        }else{
+            throw new ValidationException("");
+        }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity remove(@PathVariable int id) {
-        try {
+    public void remove(@PathVariable int id) throws ValidationException {
+        if(id>0) {
             orderService.remove(id);
-            return new ResponseEntity(HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }else {
+            throw new ValidationException("");
         }
+    }
 
+    @ExceptionHandler(value = {EntityNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorMessage entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                "Заказ не найден!"
+        );
+        return message;
+    }
+
+    @ExceptionHandler(value = {ValidationException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage badRequestException(EntityNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                "Ошибка валидации!"
+        );
+        return message;
+    }
+
+    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage entityNotFoundException(ServerErrorException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                "Ошибка сервера!"
+        );
+        return message;
     }
 }

@@ -1,31 +1,32 @@
-package ru.cinimex.deveducate.service;
+package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.SellerEntity;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
+import ru.cinimex.deveducate.service.ConvertObject;
+import ru.cinimex.deveducate.service.SellerService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
-public class SellerServiceImpl implements SellerService, ConvertObject<SellerEntity, SellerDto>{
+public class SellerServiceImpl implements SellerService, ConvertObject<SellerEntity, SellerDto> {
 
-    private MapperFactory mapperFactory;
-
-    private SellerRepository sellerRepository;
+    private final ConfigurableMapperOrika mapperFactory;
+    private final SellerRepository sellerRepository;
 
     @Override
     public SellerDto get(int id) {
-        Optional<SellerEntity> sellerEntityOpt = sellerRepository.findById(id);
-        SellerDto sellerDto = sellerEntityOpt.isPresent() ? objectEntityMapsToObjectDto(sellerEntityOpt.get()) : null;
+        SellerEntity sellerEntityOpt = sellerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        SellerDto sellerDto = objectEntityMapsToObjectDto(sellerEntityOpt);
 
         return sellerDto;
     }
@@ -34,7 +35,7 @@ public class SellerServiceImpl implements SellerService, ConvertObject<SellerEnt
     public SellerDto save(SellerDto sellerDto) {
         SellerEntity sellerEntity = objectDtoMapsToObjectEntity(sellerDto);
         sellerRepository.save(sellerEntity);
-        sellerDto.setSellerId(sellerEntity.getSellerId());
+        sellerDto.setId(sellerEntity.getSellerId());
 
         return sellerDto;
     }
@@ -44,7 +45,7 @@ public class SellerServiceImpl implements SellerService, ConvertObject<SellerEnt
         Iterable<SellerEntity> sellerEntityList = sellerRepository.findAll();
         List<SellerDto> sellerDtoList = null;
 
-        if(sellerEntityList != null) {
+        if (sellerEntityList != null) {
             sellerDtoList = new ArrayList<SellerDto>();
             for (SellerEntity seller : sellerEntityList) {
                 sellerDtoList.add(objectEntityMapsToObjectDto(seller));
@@ -55,9 +56,8 @@ public class SellerServiceImpl implements SellerService, ConvertObject<SellerEnt
 
     @Override
     public SellerDto update(SellerDto sellerDto) {
-        Optional<SellerEntity> sellerEntityOpt = sellerRepository.findById(sellerDto.getSellerId());
-        SellerEntity sellerEntity = sellerEntityOpt.isPresent() ? sellerEntityOpt.get() : null;
-        if(sellerEntity != null) {
+        SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
+        if (sellerEntity != null) {
             sellerRepository.save(sellerEntity);
             // ...
         }
@@ -71,19 +71,16 @@ public class SellerServiceImpl implements SellerService, ConvertObject<SellerEnt
 
     @Override
     public SellerDto objectEntityMapsToObjectDto(SellerEntity objectEntity) {
-        mapperFactory.classMap(SellerEntity.class, SellerDto.class);
-        MapperFacade mapper = mapperFactory.getMapperFacade();
-        SellerDto sellerDto = mapper.map(objectEntity, SellerDto.class);
+        SellerDto sellerDto = mapperFactory.map(objectEntity, SellerDto.class);
 
         return sellerDto;
     }
 
     @Override
     public SellerEntity objectDtoMapsToObjectEntity(SellerDto objectDto) {
-        mapperFactory.classMap(SellerDto.class, SellerEntity.class);
-        MapperFacade mapper = mapperFactory.getMapperFacade();
-        SellerEntity sellerEntity = mapper.map(objectDto, SellerEntity.class);
+        SellerEntity sellerEntity = mapperFactory.map(objectDto, SellerEntity.class);
 
         return sellerEntity;
     }
+
 }

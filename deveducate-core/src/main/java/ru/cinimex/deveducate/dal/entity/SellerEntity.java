@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -46,6 +47,6 @@ public class SellerEntity {
     private String adminUser;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "seller")
-    private Set<OrderEntity> orders;
+    private List<OrderEntity> orders;
 
 }

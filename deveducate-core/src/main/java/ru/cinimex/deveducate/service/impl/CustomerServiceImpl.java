@@ -1,35 +1,33 @@
-package ru.cinimex.deveducate.service;
+package ru.cinimex.deveducate.service.impl;
 
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.CustomerEntity;
-import ru.cinimex.deveducate.dal.entity.OrderEntity;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
+import ru.cinimex.deveducate.service.ConvertObject;
+import ru.cinimex.deveducate.service.CustomerService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
+@RequiredArgsConstructor
 @Service
+@Slf4j
 public class CustomerServiceImpl implements CustomerService, ConvertObject<CustomerEntity, CustomerDto> {
 
-    private MapperFactory mapperFactory;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    public CustomerServiceImpl(){
-        mapperFactory = new DefaultMapperFactory.Builder().build();
-    }
+    private final ConfigurableMapperOrika mapperFactory;
+    private final CustomerRepository customerRepository;
 
     @Override
     public CustomerDto get(int id) {
-        Optional<CustomerEntity> customerEntityOpt = customerRepository.findById(id);
-        CustomerDto customerDto = customerEntityOpt.isPresent() ? objectEntityMapsToObjectDto(customerEntityOpt.get()) : null;
+        CustomerEntity customerEntityOpt = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        CustomerDto customerDto = objectEntityMapsToObjectDto(customerEntityOpt);
 
         return customerDto;
     }
@@ -39,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
 
         CustomerEntity customerEntity = objectDtoMapsToObjectEntity(customerDto);
         customerRepository.save(customerEntity);
-        customerDto.setCustomerId(customerEntity.getCustomerId());
+        customerDto.setId(customerEntity.getCustomerId());
 
         return customerDto;
     }
@@ -49,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
         Iterable<CustomerEntity> customerEntityList = customerRepository.findAll();
         List<CustomerDto> customerDtoList = null;
 
-        if(customerEntityList != null) {
+        if (customerEntityList != null) {
             customerDtoList = new ArrayList<CustomerDto>();
             for (CustomerEntity customer : customerEntityList) {
                 customerDtoList.add(objectEntityMapsToObjectDto(customer));
@@ -60,9 +58,8 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
 
     @Override
     public CustomerDto update(CustomerDto customerDto) {
-        Optional<CustomerEntity> customerEntityOpt = customerRepository.findById(customerDto.getCustomerId());
-        CustomerEntity customerEntity = customerEntityOpt.isPresent() ? customerEntityOpt.get() : null;
-        if(customerEntity != null) {
+        CustomerEntity customerEntity = customerRepository.findById(customerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
+        if (customerEntity != null) {
             customerRepository.save(customerEntity);
             // ...
         }
@@ -71,25 +68,26 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
 
     @Override
     public void remove(int id) {
-        customerRepository.deleteById(id);
+        try {
+            customerRepository.deleteById(id);
+        }catch (EntityNotFoundException ex){
+            new EntityNotFoundException();
+        }
     }
 
 
     @Override
     public CustomerDto objectEntityMapsToObjectDto(CustomerEntity objectEntity) {
-        mapperFactory.classMap(CustomerEntity.class, CustomerDto.class);
-        MapperFacade mapper = mapperFactory.getMapperFacade();
-        CustomerDto customerDto = mapper.map(objectEntity, CustomerDto.class);
+        CustomerDto customerDto = mapperFactory.map(objectEntity, CustomerDto.class);
 
         return customerDto;
     }
 
     @Override
     public CustomerEntity objectDtoMapsToObjectEntity(CustomerDto objectDto) {
-        mapperFactory.classMap(CustomerDto.class, CustomerEntity.class);
-        MapperFacade mapper = mapperFactory.getMapperFacade();
-        CustomerEntity customerEntity = mapper.map(objectDto, CustomerEntity.class);
+        CustomerEntity customerEntity = mapperFactory.map(objectDto, CustomerEntity.class);
 
         return customerEntity;
     }
+
 }

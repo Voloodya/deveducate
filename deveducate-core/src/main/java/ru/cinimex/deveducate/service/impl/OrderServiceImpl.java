@@ -1,31 +1,32 @@
-package ru.cinimex.deveducate.service;
+package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.OrderEntity;
 import ru.cinimex.deveducate.dal.repository.OrderRepository;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
+import ru.cinimex.deveducate.service.ConvertObject;
+import ru.cinimex.deveducate.service.OrderService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity, OrderDto>{
+public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity, OrderDto> {
 
-    private MapperFactory mapperFactory;
+    private final ConfigurableMapperOrika mapperFactory;
+    private final OrderRepository orderRepository;
 
-    private OrderRepository orderRepository;
 
     @Override
     public OrderDto get(int id) {
-        Optional<OrderEntity> orderEntityOpt = orderRepository.findById(id);
-        OrderDto orderDto = orderEntityOpt.isPresent() ? objectEntityMapsToObjectDto(orderEntityOpt.get()) : null;
+        OrderEntity orderEntityOpt = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
+        OrderDto orderDto = objectEntityMapsToObjectDto(orderEntityOpt);
 
         return orderDto;
     }
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity
         Iterable<OrderEntity> orderEntityList = orderRepository.findAll();
         List<OrderDto> orderDtoList = null;
 
-        if(orderEntityList != null) {
+        if (orderEntityList != null) {
             orderDtoList = new ArrayList<OrderDto>();
             for (OrderEntity order : orderEntityList) {
                 orderDtoList.add(objectEntityMapsToObjectDto(order));
@@ -55,9 +56,8 @@ public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        Optional<OrderEntity> orderEntityOpt = orderRepository.findById(orderDto.getOrderId());
-        OrderEntity orderEntity = orderEntityOpt.isPresent() ? orderEntityOpt.get() : null;
-        if(orderEntity != null) {
+        OrderEntity orderEntity = orderRepository.findById(orderDto.getOrderId()).orElseThrow(() -> new EntityNotFoundException());
+        if (orderEntity != null) {
             orderRepository.save(orderEntity);
             // ...
         }
@@ -71,19 +71,16 @@ public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity
 
     @Override
     public OrderDto objectEntityMapsToObjectDto(OrderEntity objectEntity) {
-        mapperFactory.classMap(OrderEntity.class, OrderDto.class);
-        MapperFacade mapper = mapperFactory.getMapperFacade();
-        OrderDto orderDto = mapper.map(objectEntity, OrderDto.class);
+        OrderDto orderDto = mapperFactory.map(objectEntity, OrderDto.class);
 
         return orderDto;
     }
 
     @Override
     public OrderEntity objectDtoMapsToObjectEntity(OrderDto objectDto) {
-        mapperFactory.classMap(OrderDto.class, OrderEntity.class);
-        MapperFacade mapper = mapperFactory.getMapperFacade();
-        OrderEntity orderEntity = mapper.map(objectDto, OrderEntity.class);
+        OrderEntity orderEntity = mapperFactory.map(objectDto, OrderEntity.class);
 
         return orderEntity;
     }
+
 }

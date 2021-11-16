@@ -1,13 +1,18 @@
 package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
+import org.springdoc.api.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ServerErrorException;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
 import ru.cinimex.deveducate.service.CustomerService;
 
+import javax.persistence.EntityNotFoundException;
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @Api("API для объектов Покупатели")
@@ -19,48 +24,74 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> get(@PathVariable int id){
+    public CustomerDto get(@PathVariable int id) throws ValidationException {
 
-        return new ResponseEntity<>(customerService.get(id),HttpStatus.OK);
+        if(id > 0) {
+            return customerService.get(id);
+        }else {
+            throw new ValidationException("");
+        }
     }
 
     @PostMapping()
-    public ResponseEntity<CustomerDto> save(CustomerDto customerDto){
+    public CustomerDto save(CustomerDto customerDto) throws ValidationException {
 
         if(customerDto != null) {
-             customerDto = customerService.save(customerDto);
+            return customerService.save(customerDto);
         }else{
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            throw new ValidationException("");
         }
-        return new ResponseEntity<>(customerDto, HttpStatus.OK) ;
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<CustomerDto>> getAll(){
-
-        return new ResponseEntity<>(customerService.getAll(),HttpStatus.OK);
+    public List<CustomerDto> getAll() {
+        return customerService.getAll();
     }
 
     @PutMapping()
-    public ResponseEntity<CustomerDto> update(CustomerDto customerDto){
+    public CustomerDto update(CustomerDto customerDto) throws ValidationException {
 
-        if(customerDto != null) {
-            return new ResponseEntity<>(customerDto, HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (customerDto != null && customerDto.getId() != null) {
+            return customerService.update(customerDto);
+        } else {
+            throw new ValidationException("");
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable int id){
-
-        try {
+    public void remove(@PathVariable int id) throws ValidationException {
+        if(id>0) {
             customerService.remove(id);
-            return new ResponseEntity(HttpStatus.OK);
-        }catch (Exception ex){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }else {
+            throw new ValidationException("");
         }
+    }
+
+    @ExceptionHandler(value = {EntityNotFoundException.class})
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorMessage entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                "Покупатель не найден!"
+        );
+        return message;
+    }
+
+    @ExceptionHandler(value = {ValidationException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorMessage badRequestException(EntityNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                "Некорректный запрос!"
+        );
+        return message;
+    }
+
+    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage entityNotFoundException(ServerErrorException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                "Ошибка сервера!"
+        );
+        return message;
     }
 
 }
