@@ -1,24 +1,20 @@
 package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.SellerEntity;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
-import ru.cinimex.deveducate.service.ConvertObject;
 import ru.cinimex.deveducate.service.SellerService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
-public class SellerServiceImpl implements SellerService, ConvertObject<SellerEntity, SellerDto> {
+public class SellerServiceImpl implements SellerService {
 
     private final ConfigurableMapperOrika mapperFactory;
     private final SellerRepository sellerRepository;
@@ -69,14 +65,12 @@ public class SellerServiceImpl implements SellerService, ConvertObject<SellerEnt
         sellerRepository.deleteById(id);
     }
 
-    @Override
     public SellerDto objectEntityMapsToObjectDto(SellerEntity objectEntity) {
         SellerDto sellerDto = mapperFactory.map(objectEntity, SellerDto.class);
 
         return sellerDto;
     }
 
-    @Override
     public SellerEntity objectDtoMapsToObjectEntity(SellerDto objectDto) {
         SellerEntity sellerEntity = mapperFactory.map(objectDto, SellerEntity.class);
 

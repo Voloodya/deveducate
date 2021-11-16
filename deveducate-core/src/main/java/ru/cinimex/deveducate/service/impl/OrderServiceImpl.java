@@ -6,18 +6,15 @@ import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.OrderEntity;
 import ru.cinimex.deveducate.dal.repository.OrderRepository;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
-import ru.cinimex.deveducate.service.ConvertObject;
 import ru.cinimex.deveducate.service.OrderService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity, OrderDto> {
+public class OrderServiceImpl implements OrderService{
 
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
@@ -69,14 +66,12 @@ public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity
         orderRepository.deleteById(id);
     }
 
-    @Override
     public OrderDto objectEntityMapsToObjectDto(OrderEntity objectEntity) {
         OrderDto orderDto = mapperFactory.map(objectEntity, OrderDto.class);
 
         return orderDto;
     }
 
-    @Override
     public OrderEntity objectDtoMapsToObjectEntity(OrderDto objectDto) {
         OrderEntity orderEntity = mapperFactory.map(objectDto, OrderEntity.class);
 

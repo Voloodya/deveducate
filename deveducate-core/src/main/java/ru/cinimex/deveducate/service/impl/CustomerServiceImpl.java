@@ -7,19 +7,16 @@ import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
-import ru.cinimex.deveducate.service.ConvertObject;
 import ru.cinimex.deveducate.service.CustomerService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class CustomerServiceImpl implements CustomerService, ConvertObject<CustomerEntity, CustomerDto> {
+public class CustomerServiceImpl implements CustomerService {
 
     private final ConfigurableMapperOrika mapperFactory;
     private final CustomerRepository customerRepository;
@@ -76,14 +73,12 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
     }
 
 
-    @Override
     public CustomerDto objectEntityMapsToObjectDto(CustomerEntity objectEntity) {
         CustomerDto customerDto = mapperFactory.map(objectEntity, CustomerDto.class);
 
         return customerDto;
     }
 
-    @Override
     public CustomerEntity objectDtoMapsToObjectEntity(CustomerDto objectDto) {
         CustomerEntity customerEntity = mapperFactory.map(objectDto, CustomerEntity.class);
 
