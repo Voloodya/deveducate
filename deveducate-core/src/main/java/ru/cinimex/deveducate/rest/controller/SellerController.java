@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ServerErrorException;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
+import ru.cinimex.deveducate.rest.exception.RestExceptionHandler;
 import ru.cinimex.deveducate.service.SellerService;
 
 import javax.persistence.EntityNotFoundException;

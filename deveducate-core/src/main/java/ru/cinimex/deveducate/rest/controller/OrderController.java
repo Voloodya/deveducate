@@ -1,15 +1,20 @@
 package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ServerErrorException;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
+import ru.cinimex.deveducate.rest.exception.RestExceptionHandler;
 import ru.cinimex.deveducate.service.OrderService;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,11 +23,11 @@ import java.util.List;
 
 @Api("API для объектов Ордер")
 @RestControllerAdvice
+@RequiredArgsConstructor
 @RequestMapping("/orders")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
 
     @GetMapping("{id}")
     public OrderDto get(@PathVariable int id) throws ValidationException {
@@ -93,5 +98,12 @@ public class OrderController {
                 "Ошибка сервера!"
         );
         return message;
+    }
+
+    @GetMapping(path = "/pageable")
+    public Slice<OrderDto> loadOrdersPage(@PathVariable Pageable pageable){
+
+        return orderService.getAllSlicePage(pageable);
+
     }
 }

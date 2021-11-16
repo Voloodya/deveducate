@@ -2,6 +2,8 @@ package ru.cinimex.deveducate.rest.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

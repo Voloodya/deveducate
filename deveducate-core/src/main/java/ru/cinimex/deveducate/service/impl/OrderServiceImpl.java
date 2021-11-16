@@ -1,10 +1,17 @@
 package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
+import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 import ru.cinimex.deveducate.dal.entity.OrderEntity;
+import ru.cinimex.deveducate.dal.entity.SellerEntity;
+import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.dal.repository.OrderRepository;
+import ru.cinimex.deveducate.dal.repository.SellerRepository;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
 import ru.cinimex.deveducate.service.OrderService;
 
@@ -18,6 +25,8 @@ public class OrderServiceImpl implements OrderService{
 
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
+    private final SellerRepository sellerRepository;
+    private final CustomerRepository customerRepository;
 
 
     @Override
@@ -31,6 +40,11 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public OrderDto save(OrderDto orderDto) {
         OrderEntity orderEntity = objectDtoMapsToObjectEntity(orderDto);
+        SellerEntity sellerEntity = sellerRepository.findById(orderDto.getSeller().getId()).orElseThrow(() -> new EntityNotFoundException());
+        CustomerEntity customerEntity = customerRepository.findById(orderDto.getCustomer().getId()).orElseThrow(() -> new EntityNotFoundException());
+        orderEntity.setSeller(sellerEntity);
+        orderEntity.setCustomer(customerEntity);
+        orderEntity.setOrderTotal(10);
         orderRepository.save(orderEntity);
         orderDto.setOrderId(orderEntity.getOrderId());
 
@@ -52,6 +66,16 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public Page<OrderDto> getAllPage(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public Slice<OrderDto> getAllSlicePage(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public OrderDto update(OrderDto orderDto) {
         OrderEntity orderEntity = orderRepository.findById(orderDto.getOrderId()).orElseThrow(() -> new EntityNotFoundException());
         if (orderEntity != null) {
@@ -60,6 +84,7 @@ public class OrderServiceImpl implements OrderService{
         }
         return orderDto;
     }
+
 
     @Override
     public void remove(int id) {
