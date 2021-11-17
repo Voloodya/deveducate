@@ -17,9 +17,7 @@ public interface OrderService {
 
     List<OrderDto> getAll();
 
-    Page<OrderDto> getAllPage(Pageable pageable);
-
-    Slice<OrderDto> getAllSlicePage(Pageable pageable);
+    Page<OrderDto> getPage(Pageable pageable);
 
     OrderDto update(OrderDto orderDto);
 

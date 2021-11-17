@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,37 +71,10 @@ public class OrderController {
         }
     }
 
-    @ExceptionHandler(value = {EntityNotFoundException.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ErrorMessage entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                "Заказ не найден!"
-        );
-        return message;
-    }
-
-    @ExceptionHandler(value = {ValidationException.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage badRequestException(EntityNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                "Ошибка валидации!"
-        );
-        return message;
-    }
-
-    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessage entityNotFoundException(ServerErrorException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                "Ошибка сервера!"
-        );
-        return message;
-    }
-
     @GetMapping(path = "/pageable")
-    public Slice<OrderDto> loadOrdersPage(@PathVariable Pageable pageable){
+    public Page<OrderDto> getPage(Integer page, Integer size){
 
-        return orderService.getAllSlicePage(pageable);
-
+        Pageable pageable = PageRequest.of(page-1, size);
+        return orderService.getPage(pageable);
     }
 }

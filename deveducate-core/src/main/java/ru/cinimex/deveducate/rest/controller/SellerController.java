@@ -68,31 +68,4 @@ public class SellerController {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
-
-    @ExceptionHandler(value = {EntityNotFoundException.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ErrorMessage entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                "Продавец не найден!"
-        );
-        return message;
-    }
-
-    @ExceptionHandler(value = {ValidationException.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ErrorMessage badRequestException(EntityNotFoundException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                "Ошибка валидации!"
-        );
-        return message;
-    }
-
-    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorMessage entityNotFoundException(ServerErrorException ex, WebRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                "Ошибка сервера!"
-        );
-        return message;
-    }
 }

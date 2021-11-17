@@ -2,6 +2,7 @@ package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import ru.cinimex.deveducate.service.OrderService;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -66,13 +68,12 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Page<OrderDto> getAllPage(Pageable pageable) {
-        return null;
-    }
+    public Page<OrderDto> getPage(Pageable pageable) {
+        Page<OrderEntity> orderEntityPage = orderRepository.findAllPage(pageable);
+        List<OrderEntity> orderEntityList = orderEntityPage.getContent();
+        List<OrderDto> orderDtoList = orderEntityList.stream().map(o -> objectEntityMapsToObjectDto(o)).collect(Collectors.toList());
 
-    @Override
-    public Slice<OrderDto> getAllSlicePage(Pageable pageable) {
-        return null;
+        return new PageImpl<>(orderDtoList, pageable, orderEntityPage.getTotalElements());
     }
 
     @Override
