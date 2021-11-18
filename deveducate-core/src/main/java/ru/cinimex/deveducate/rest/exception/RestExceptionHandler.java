@@ -33,11 +33,11 @@ public class RestExceptionHandler {
         );
     }
 
-//    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorMessage internalServerException(ServerErrorException ex, WebRequest request) {
-//        return new ErrorMessage(
-//                "Ошибка сервера!"
-//        );
-//    }
+    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage internalServerException(ServerErrorException ex, WebRequest request) {
+        return new ErrorMessage(
+                "Ошибка сервера!"
+        );
+    }
 }

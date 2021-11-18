@@ -72,9 +72,32 @@ public class OrderController {
     }
 
     @GetMapping(path = "/pageable")
-    public Page<OrderDto> getPage(Integer page, Integer size){
+    public Page<OrderDto> getPage(int page, int size){
 
         Pageable pageable = PageRequest.of(page-1, size);
         return orderService.getPage(pageable);
     }
+
+    @GetMapping(path = "/pageablespecific")
+    public Page<OrderDto> getSpecificPage(int page, int size, int orderTotal){
+
+        Pageable pageable = PageRequest.of(page-1, size);
+        return orderService.getSpecificPage(pageable, orderTotal);
+    }
+
+    @GetMapping(path = "/current")
+    public List<OrderDto> getCurrentDate(){
+        return orderService.getCurrentDate();
+    }
+
+    @GetMapping(path = "/customer")
+    public List<OrderDto> getByCustomer(@RequestParam int id){
+        return orderService.getByCustomer(id);
+    }
+
+    @GetMapping(path = "/total")
+    public List<OrderDto> getByOrderTotal(@RequestParam int count){
+        return orderService.getByOrderTotal(count);
+    }
+
 }

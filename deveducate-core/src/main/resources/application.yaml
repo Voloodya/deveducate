@@ -17,4 +17,9 @@ spring:
     url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
     user: 'vlutsenko'
     password: 'vlutsenko'
+#  logging:
+#    level:
+#      com:
+#        querydsl:
+#          sql: DEBUG
 

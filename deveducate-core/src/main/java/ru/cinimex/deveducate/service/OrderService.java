@@ -2,8 +2,8 @@ package ru.cinimex.deveducate.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
 
 import java.util.List;
@@ -22,4 +22,12 @@ public interface OrderService {
     OrderDto update(OrderDto orderDto);
 
     void remove(int id);
+
+    Page<OrderDto> getSpecificPage(Pageable pageable, int orderTotal);
+
+    List<OrderDto> getCurrentDate();
+
+    List<OrderDto> getByCustomer(int id);
+
+    List<OrderDto> getByOrderTotal(int count);
 }

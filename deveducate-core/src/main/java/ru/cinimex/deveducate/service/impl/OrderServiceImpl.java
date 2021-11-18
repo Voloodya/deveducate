@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.CustomerEntity;
@@ -14,6 +15,7 @@ import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.dal.repository.OrderRepository;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
+import ru.cinimex.deveducate.rest.filter.OrderSpecification;
 import ru.cinimex.deveducate.service.OrderService;
 
 import javax.persistence.EntityNotFoundException;
@@ -69,12 +71,41 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Page<OrderDto> getPage(Pageable pageable) {
-        Page<OrderEntity> orderEntityPage = orderRepository.findAllPage(pageable);
+        Page<OrderEntity> orderEntityPage = orderRepository.findAll(pageable);
         List<OrderEntity> orderEntityList = orderEntityPage.getContent();
         List<OrderDto> orderDtoList = orderEntityList.stream().map(o -> objectEntityMapsToObjectDto(o)).collect(Collectors.toList());
 
         return new PageImpl<>(orderDtoList, pageable, orderEntityPage.getTotalElements());
     }
+
+
+
+    @Override
+    public Page<OrderDto> getSpecificPage(Pageable pageable, int orderTotal) {
+        Page<OrderEntity> orderEntityPage = orderRepository.findAll(Specification.where(OrderSpecification.isOrderTotal(orderTotal)), pageable);
+        List<OrderEntity> orderEntityList = orderEntityPage.getContent();
+        List<OrderDto> orderDtoList = orderEntityList.stream().map(o -> objectEntityMapsToObjectDto(o)).collect(Collectors.toList());
+
+        return new PageImpl<>(orderDtoList, pageable, orderEntityPage.getTotalElements());
+    }
+
+    @Override
+    public List<OrderDto> getCurrentDate() {
+        return null;
+    }
+
+    @Override
+    public List<OrderDto> getByCustomer(int id) {
+        return null;
+    }
+
+    @Override
+    public List<OrderDto> getByOrderTotal(int count) {
+        List<OrderEntity> orderEntityList = orderRepository.findByOrderTotal(count);
+        List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
+        return orderDtoList;
+    }
+
 
     @Override
     public OrderDto update(OrderDto orderDto) {

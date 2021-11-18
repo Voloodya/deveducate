@@ -1,8 +1,10 @@
 plugins {
     id 'org.springframework.boot' version '2.4.12'
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.8'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'application'
+    id 'idea'
 }
 
 group = 'ru.cinimex'
@@ -22,6 +24,8 @@ repositories {
 
 ext {
     set('springCloudVersion', "2020.0.4")
+    springBootVersion = '${springBootVersion}'
+    set('queryDslVersion', '4.2.2')
 }
 
 dependencies {
@@ -48,6 +52,10 @@ dependencies {
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.12'
     implementation group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
     implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.2'
+    // QueryDSL
+    compile "com.querydsl:querydsl-sql:${queryDslVersion}"
+    annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:general")
+
 }
 
 dependencyManagement {
