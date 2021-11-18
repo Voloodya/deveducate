@@ -19,7 +19,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("/{id}")
-    public CustomerDto get(@PathVariable int id) throws ValidationException {
+    public CustomerDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
         if (id > 0) {
             return customerService.get(id);
@@ -53,7 +53,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable int id) {
+    public void remove(@PathVariable(value = "id") int id) {
         customerService.remove(id);
     }
 

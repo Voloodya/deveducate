@@ -25,7 +25,7 @@ public class SellerController {
     private SellerService sellerService;
 
     @GetMapping("/{id}")
-    public SellerDto get(@PathVariable int id) throws ValidationException {
+    public SellerDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
         if(id > 0) {
             return sellerService.get(id);
@@ -60,7 +60,7 @@ public class SellerController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity remove(@PathVariable int id) {
+    public ResponseEntity remove(@PathVariable(value = "id") int id) {
         try {
             sellerService.remove(id);
             return new ResponseEntity(HttpStatus.OK);

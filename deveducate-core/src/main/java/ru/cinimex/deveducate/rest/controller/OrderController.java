@@ -27,8 +27,9 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    // http://localhost:8080/orders/1
     @GetMapping("{id}")
-    public OrderDto get(@PathVariable int id) throws ValidationException {
+    public OrderDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
         if(id > 0) {
             return orderService.get(id);
@@ -37,6 +38,7 @@ public class OrderController {
         }
     }
 
+    // localhost:8080/orders
     @PostMapping()
     public OrderDto save(OrderDto orderDto) throws ValidationException {
 
@@ -47,11 +49,13 @@ public class OrderController {
         }
     }
 
+    // http://localhost:8080/orders/getAll
     @GetMapping("/getAll")
     public List<OrderDto> getAll() {
         return orderService.getAll();
     }
 
+    // localhost:8080/orders
     @PutMapping()
     public OrderDto update(OrderDto orderDto) throws ValidationException {
 
@@ -62,8 +66,9 @@ public class OrderController {
         }
     }
 
+    // http://localhost:8080/orders/3
     @DeleteMapping("{id}")
-    public void remove(@PathVariable int id) throws ValidationException {
+    public void remove(@PathVariable(value = "id") int id) throws ValidationException {
         if(id>0) {
             orderService.remove(id);
         }else {
@@ -71,6 +76,7 @@ public class OrderController {
         }
     }
 
+    // http://localhost:8080/orders/pageable?page=2&size=2
     @GetMapping(path = "/pageable")
     public Page<OrderDto> getPage(int page, int size){
 
@@ -78,6 +84,7 @@ public class OrderController {
         return orderService.getPage(pageable);
     }
 
+    // http://localhost:8080/orders/pageablespecific?page=1&size=2&orderTotal=5
     @GetMapping(path = "/pageablespecific")
     public Page<OrderDto> getSpecificPage(int page, int size, int orderTotal){
 
@@ -95,6 +102,7 @@ public class OrderController {
         return orderService.getByCustomer(id);
     }
 
+    // http://localhost:8080/orders/total?count=5
     @GetMapping(path = "/total")
     public List<OrderDto> getByOrderTotal(@RequestParam int count){
         return orderService.getByOrderTotal(count);

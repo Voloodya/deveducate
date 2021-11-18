@@ -1,16 +1,14 @@
 package ru.cinimex.deveducate.service.impl;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
-import ru.cinimex.deveducate.dal.entity.CustomerEntity;
-import ru.cinimex.deveducate.dal.entity.OrderEntity;
-import ru.cinimex.deveducate.dal.entity.SellerEntity;
+import ru.cinimex.deveducate.dal.entity.*;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.dal.repository.OrderRepository;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
@@ -20,12 +18,13 @@ import ru.cinimex.deveducate.service.OrderService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
@@ -79,7 +78,6 @@ public class OrderServiceImpl implements OrderService{
     }
 
 
-
     @Override
     public Page<OrderDto> getSpecificPage(Pageable pageable, int orderTotal) {
         Page<OrderEntity> orderEntityPage = orderRepository.findAll(Specification.where(OrderSpecification.isOrderTotal(orderTotal)), pageable);
@@ -91,12 +89,25 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public List<OrderDto> getCurrentDate() {
-        return null;
+
+        QOrderEntity qOrder = QOrderEntity.orderEntity;
+        Date date = new Date();
+        BooleanExpression isCurrentDate = qOrder.orderTimestam.eq(date);
+        List<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
+        List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
+
+        return orderDtoList;
     }
 
     @Override
     public List<OrderDto> getByCustomer(int id) {
-        return null;
+
+        QOrderEntity qOrder = QOrderEntity.orderEntity;
+        BooleanExpression isCustomer = qOrder.customer.customerId.eq(id);
+        List<OrderEntity> orderEntityList =  orderRepository.findAll(isCustomer);
+        List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
+
+        return orderDtoList;
     }
 
     @Override

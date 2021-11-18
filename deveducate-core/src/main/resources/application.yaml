@@ -17,9 +17,20 @@ spring:
     url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
     user: 'vlutsenko'
     password: 'vlutsenko'
-#  logging:
-#    level:
-#      com:
-#        querydsl:
-#          sql: DEBUG
+  kafka:
+    consumer:
+      bootstrap-servers: devedu-01.vm.cmx.ru:9092
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: devedu-01.vm.cmx.ru:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  logging:
+    level:
+      com:
+        querydsl:
+          sql: DEBUG
 
