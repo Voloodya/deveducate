@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         Date date = new Date();
         BooleanExpression isCurrentDate = qOrder.orderTimestam.eq(date);
-        List<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
+        Iterable<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
         return orderDtoList;
@@ -104,7 +104,7 @@ public class OrderServiceImpl implements OrderService {
 
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         BooleanExpression isCustomer = qOrder.customer.customerId.eq(id);
-        List<OrderEntity> orderEntityList =  orderRepository.findAll(isCustomer);
+        Iterable<OrderEntity> orderEntityList =  orderRepository.findAll(isCustomer);
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
         return orderDtoList;
