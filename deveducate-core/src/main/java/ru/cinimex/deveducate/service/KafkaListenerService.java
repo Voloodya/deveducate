@@ -11,9 +11,12 @@ public class KafkaListenerService {
 
     private final Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
 
-    @KafkaListener(topics = "vlutsenko-customers", groupId = "vlutsenko-customers-0")
-    public CustomerDto consume(CustomerDto consumerDto){
-        logger.info(String.format("#### -> Consumed message -> %s", consumerDto));
+    @KafkaListener(topics = "vlutsenko-customers", groupId = "group_vlutsenko")
+    public CustomerDto consume(String consumerDto){
+
+        if(consumerDto.contains("12")) {
+            logger.info(String.format("#### -> Consumed message -> %s", consumerDto));
+        }
         return null;
     }
 

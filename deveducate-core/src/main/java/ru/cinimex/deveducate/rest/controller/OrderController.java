@@ -24,11 +24,10 @@ public class OrderController {
     @GetMapping("{id}")
     public OrderDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
-        if (id > 0) {
-            return orderService.get(id);
-        } else {
+        if (id < 0) {
             throw new ValidationException("");
         }
+        return orderService.get(id);
     }
 
     // localhost:8080/orders
@@ -62,11 +61,10 @@ public class OrderController {
     // http://localhost:8080/orders/3
     @DeleteMapping("{id}")
     public void remove(@PathVariable(value = "id") int id) throws ValidationException {
-        if (id > 0) {
-            orderService.remove(id);
-        } else {
+        if (id < 0) {
             throw new ValidationException("");
         }
+        orderService.remove(id);
     }
 
     // http://localhost:8080/orders/pageable?page=2&size=2

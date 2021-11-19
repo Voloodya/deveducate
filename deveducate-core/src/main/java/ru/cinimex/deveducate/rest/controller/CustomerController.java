@@ -21,21 +21,19 @@ public class CustomerController {
     @GetMapping("/{id}")
     public CustomerDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
-        if (id > 0) {
-            return customerService.get(id);
-        } else {
-            throw new ValidationException("Поле id обязательно!");
+        if (id < 0) {
+            throw new ValidationException("Поле id некорректно!");
         }
+        return customerService.get(id);
     }
 
     @PostMapping()
     public CustomerDto save(CustomerDto customerDto) throws ValidationException {
 
-        if (customerDto != null) {
-            return customerService.save(customerDto);
-        } else {
+        if (customerDto == null) {
             throw new ValidationException("Объект не должен быть пустым!");
         }
+        return customerService.save(customerDto);
     }
 
     @GetMapping("/getAll")
@@ -53,7 +51,10 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable(value = "id") int id) {
+    public void remove(@PathVariable(value = "id") int id) throws ValidationException {
+        if (id < 0) {
+            throw new ValidationException("");
+        }
         customerService.remove(id);
     }
 

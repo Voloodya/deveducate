@@ -1,6 +1,7 @@
 package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,30 +18,28 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @Api("API для объектов Продавцы")
+@RequiredArgsConstructor
 @RestControllerAdvice
 @RequestMapping("/sellers")
 public class SellerController {
 
-    @Autowired
-    private SellerService sellerService;
+    private final SellerService sellerService;
 
     @GetMapping("/{id}")
     public SellerDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
-        if(id > 0) {
-            return sellerService.get(id);
-        }else {
+        if(id < 0) {
             throw new ValidationException("");
         }
+        return sellerService.get(id);
     }
 
     @PostMapping()
     public SellerDto save(SellerDto sellerDto) throws ValidationException {
-        if(sellerDto != null) {
-            return sellerService.save(sellerDto);
-        }else{
+        if(sellerDto == null) {
             throw new ValidationException("");
         }
+        return sellerService.save(sellerDto);
     }
 
     @GetMapping("/getAll")
