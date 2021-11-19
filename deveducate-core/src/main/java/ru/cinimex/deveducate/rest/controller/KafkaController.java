@@ -3,16 +3,16 @@ package ru.cinimex.deveducate.rest.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
-import ru.cinimex.deveducate.service.KafkaListener_;
-import ru.cinimex.deveducate.service.KafkaProducer;
+import ru.cinimex.deveducate.service.KafkaListenerService;
+import ru.cinimex.deveducate.service.KafkaProducerService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/kafka")
 public class KafkaController {
 
-    private final KafkaProducer kafkaService;
-    private final KafkaListener_ kafkaListener;
+    private final KafkaProducerService kafkaService;
+    private final KafkaListenerService kafkaListener;
 
     @PostMapping
     public void add(@RequestBody CustomerDto customerDto) {

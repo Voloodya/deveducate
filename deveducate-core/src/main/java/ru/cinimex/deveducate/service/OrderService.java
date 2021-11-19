@@ -27,7 +27,7 @@ public interface OrderService {
 
     List<OrderDto> getCurrentDate();
 
-    List<OrderDto> getByCustomer(int id);
+    List<OrderDto> getByCustomer(Integer id);
 
     List<OrderDto> getByOrderTotal(int count);
 }

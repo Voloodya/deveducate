@@ -2,13 +2,20 @@ package ru.cinimex.deveducate.service.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
-import ru.cinimex.deveducate.dal.entity.*;
+import ru.cinimex.deveducate.dal.entity.CustomerEntity;
+import ru.cinimex.deveducate.dal.entity.OrderEntity;
+import ru.cinimex.deveducate.dal.entity.QOrderEntity;
+import ru.cinimex.deveducate.dal.entity.SellerEntity;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.dal.repository.OrderRepository;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
@@ -22,9 +29,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
@@ -89,10 +99,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> getCurrentDate() {
-
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         Date date = new Date();
-        BooleanExpression isCurrentDate = qOrder.orderTimestam.eq(date);
+        BooleanExpression isCurrentDate = qOrder.orderTimestam.between(date, DateUtils.addDays(new Date(), 1));
         Iterable<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
@@ -100,11 +109,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getByCustomer(int id) {
-
+    public List<OrderDto> getByCustomer(Integer id) {
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         BooleanExpression isCustomer = qOrder.customer.customerId.eq(id);
-        Iterable<OrderEntity> orderEntityList =  orderRepository.findAll(isCustomer);
+        List<OrderEntity> orderEntityList =null;
+        try {
+            orderEntityList = (List<OrderEntity>) orderRepository.findAll(isCustomer);
+        }catch (Exception ex){
+            logger.error("Исключение в методе getByCustomer: " , ex);
+        }
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
         return orderDtoList;
@@ -114,6 +127,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getByOrderTotal(int count) {
         List<OrderEntity> orderEntityList = orderRepository.findByOrderTotal(count);
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
+
         return orderDtoList;
     }
 

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
 
 @Service
-public class KafkaListener_ {
+public class KafkaListenerService {
 
-    private final Logger logger = LoggerFactory.getLogger(KafkaListener_.class);
+    private final Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
 
-    @KafkaListener(topics = "vlutsenko-customers", groupId = "group_id")
+    @KafkaListener(topics = "vlutsenko-customers", groupId = "vlutsenko-customers-0")
     public CustomerDto consume(CustomerDto consumerDto){
         logger.info(String.format("#### -> Consumed message -> %s", consumerDto));
         return null;

@@ -30,7 +30,6 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
   logging:
     level:
-      com:
-        querydsl:
-          sql: DEBUG
+      com.querydsl.sql: DEBUG
+      org.hibernate.SQL: DEBUG
 

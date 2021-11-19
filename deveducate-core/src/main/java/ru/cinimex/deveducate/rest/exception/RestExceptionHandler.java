@@ -33,11 +33,36 @@ public class RestExceptionHandler {
         );
     }
 
-    @ExceptionHandler(value = {ServerErrorException.class, Exception.class})
+    @ExceptionHandler(value = {ServerErrorException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage internalServerException(ServerErrorException ex, WebRequest request) {
         return new ErrorMessage(
                 "Ошибка сервера!"
+        );
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage exception(Exception ex, WebRequest request) {
+        return new ErrorMessage(
+                "НЕизвестная ошибка сервера!"
+        );
+    }
+
+
+    @ExceptionHandler(value = {UnsupportedOperationException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage unsupportedOperationException(UnsupportedOperationException ex, WebRequest request) {
+        return new ErrorMessage(
+                "Операция не поддерживается!"
+        );
+    }
+
+    @ExceptionHandler(value = {IllegalStateException.class})
+    @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+    public ErrorMessage illegalStateException(IllegalStateException ex, WebRequest request) {
+        return new ErrorMessage(
+                "Неизвестное исключение! " + ex.getMessage()
         );
     }
 }
