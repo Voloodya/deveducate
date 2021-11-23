@@ -1,6 +1,11 @@
 package ru.cinimex.deveducate.dal.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.Setter;
+import lombok.Builder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
