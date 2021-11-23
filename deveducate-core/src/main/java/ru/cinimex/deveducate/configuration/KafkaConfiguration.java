@@ -1,10 +1,12 @@
 package ru.cinimex.deveducate.configuration;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -13,18 +15,24 @@ import org.springframework.kafka.core.KafkaAdmin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @EnableKafka
+@RequiredArgsConstructor
 @Configuration
 public class KafkaConfiguration {
 
     private final Logger logger = LoggerFactory.getLogger(KafkaConfiguration.class);
 
+    @Value(value = "${spring.kafka.bootstrap-servers: localhost:9092}") // localhost:9092 - default value
+    private String bootstrapServers;
+
     @Bean
     public KafkaAdmin admin() {
         Map<String, Object> configs = new HashMap<>();
-        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "devedu-01.vm.cmx.ru:9092");
+        // Depending on you Kafka Cluster setup you need to configure additional properties!
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         return new KafkaAdmin(configs);
     }
 

@@ -15,6 +15,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
+                    unique: true
                     primaryKeyName: customer_pkey
                   name: CUSTOMER_ID
                   type: INT

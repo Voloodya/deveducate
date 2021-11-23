@@ -56,9 +56,9 @@ dependencies {
     implementation 'io.swagger:swagger-annotations:1.6.3'
     implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.2'
     // QueryDSL
-    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
-    annotationProcessor("com.querydsl:querydsl-jpa-codegen:${queryDslVersion}")
+    implementation "com.querydsl:querydsl-jpa"
+    annotationProcessor("com.querydsl:querydsl-apt::jpa")
+    annotationProcessor("com.querydsl:querydsl-jpa-codegen:4.4.0")
 
 }
 

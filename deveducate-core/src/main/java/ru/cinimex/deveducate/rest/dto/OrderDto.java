@@ -11,9 +11,9 @@ import java.util.Date;
 @Setter
 public class OrderDto {
 
-    private Integer orderId;
+    private Integer id;
 
-    private Date orderTimestam;
+    private Date orderTimestamp;
 
     private Integer orderTotal;
 

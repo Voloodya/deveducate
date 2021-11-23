@@ -19,20 +19,20 @@ import java.util.Objects;
 public class OrderEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ORDER_ID", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_order_id_seq")
+    @SequenceGenerator(name = "orders_order_id_seq", sequenceName = "orders_order_id_seq")
+    @Column(name = "ORDER_ID", nullable = false, unique = true)
     private Integer orderId;
 
     @Column(name = "ORDER_TIMESTAM")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date orderTimestam;
+    private Date orderTimestamp;
 
     @Column(name = "ORDER_TOTAL")
     private Integer orderTotal;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SELLER_ID")
-    @ToString.Exclude
     private SellerEntity seller;
 
     @ManyToOne(fetch = FetchType.EAGER)

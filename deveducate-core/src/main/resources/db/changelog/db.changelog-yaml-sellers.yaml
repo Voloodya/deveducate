@@ -15,6 +15,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
+                    unique: true
                     primaryKeyName: seller_pkey
                   name: SELLER_ID
                   type: INT

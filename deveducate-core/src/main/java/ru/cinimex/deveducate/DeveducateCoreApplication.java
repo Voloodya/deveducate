@@ -2,6 +2,7 @@ package ru.cinimex.deveducate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 // Класс конфигурации и запуска приложения.
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @SpringBootApplication
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableCaching    //подключение Spring Cache
 public class DeveducateCoreApplication {
 
     public static void main(String[] args) {

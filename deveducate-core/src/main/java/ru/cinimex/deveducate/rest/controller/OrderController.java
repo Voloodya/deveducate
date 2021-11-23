@@ -32,7 +32,7 @@ public class OrderController {
 
     // localhost:8080/orders
     @PostMapping()
-    public OrderDto save(OrderDto orderDto) throws ValidationException {
+    public OrderDto save(@RequestBody OrderDto orderDto) throws ValidationException {
 
         if (orderDto != null) {
             return orderService.save(orderDto);
@@ -49,9 +49,9 @@ public class OrderController {
 
     // localhost:8080/orders
     @PutMapping()
-    public OrderDto update(OrderDto orderDto) throws ValidationException {
+    public OrderDto update(@RequestBody OrderDto orderDto) throws ValidationException {
 
-        if (orderDto != null && orderDto.getOrderId() != null) {
+        if (orderDto != null && orderDto.getId() != null) {
             return orderService.update(orderDto);
         } else {
             throw new ValidationException("");

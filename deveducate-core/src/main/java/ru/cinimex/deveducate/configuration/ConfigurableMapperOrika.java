@@ -31,7 +31,14 @@ public class ConfigurableMapperOrika extends ConfigurableMapper {
                 .field("sellerName","name")
                 .field("expiresOn","updateOn")
                 .register();
-        factory.classMap(OrderEntity.class, OrderDto.class).byDefault().register();
+        factory.classMap(SellerDto.class, SellerEntity.class)
+                .field("id","sellerId")
+                .field("name","sellerName")
+                .field("updateOn", "expiresOn")
+                .register();
+        factory.classMap(OrderEntity.class, OrderDto.class)
+                .field("orderId","id")
+                .register();
     }
 
 }

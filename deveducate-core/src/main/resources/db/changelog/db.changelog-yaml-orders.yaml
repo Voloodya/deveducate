@@ -15,17 +15,18 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
+                    unique: true
                     primaryKeyName: order_pkey
                   name: ORDER_ID
-                  type: INT
+                  type: INTEGER
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: ORDER_TIMESTAM
                   type: TIMESTAMP
               - column:
                   constraints:
-                    nullable: false
+                    nullable: true
                   name: ORDER_TOTAL
                   type: INT
               - column:

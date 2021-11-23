@@ -18,7 +18,7 @@ import java.util.Objects;
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CUSTOMER_ID", nullable = false)
+    @Column(name = "CUSTOMER_ID", nullable = false, unique = true)
     private Integer customerId;
 
     @Column(name = "CUST_FIRST_NAME")

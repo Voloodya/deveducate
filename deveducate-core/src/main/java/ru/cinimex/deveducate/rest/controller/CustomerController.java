@@ -28,7 +28,7 @@ public class CustomerController {
     }
 
     @PostMapping()
-    public CustomerDto save(CustomerDto customerDto) throws ValidationException {
+    public CustomerDto save(@RequestBody CustomerDto customerDto) throws ValidationException {
 
         if (customerDto == null) {
             throw new ValidationException("Объект не должен быть пустым!");
@@ -42,7 +42,7 @@ public class CustomerController {
     }
 
     @PutMapping()
-    public CustomerDto update(CustomerDto customerDto) throws ValidationException {
+    public CustomerDto update(@RequestBody CustomerDto customerDto) throws ValidationException {
 
         if (customerDto == null || customerDto.getId() == null) {
             throw new ValidationException("Поле id обязательно");

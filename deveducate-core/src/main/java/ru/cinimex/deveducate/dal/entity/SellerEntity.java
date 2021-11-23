@@ -20,7 +20,7 @@ public class SellerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SELLER_ID", nullable = false)
+    @Column(name = "SELLER_ID", nullable = false, unique = true)
     private Integer sellerId;
 
     @Column(name = "SELLER_NAME")

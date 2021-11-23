@@ -35,7 +35,7 @@ public class SellerController {
     }
 
     @PostMapping()
-    public SellerDto save(SellerDto sellerDto) throws ValidationException {
+    public SellerDto save(@RequestBody SellerDto sellerDto) throws ValidationException {
         if(sellerDto == null) {
             throw new ValidationException("");
         }
@@ -49,7 +49,7 @@ public class SellerController {
     }
 
     @PutMapping()
-    public SellerDto update(SellerDto sellerDto) throws ValidationException {
+    public SellerDto update(@RequestBody SellerDto sellerDto) throws ValidationException {
 
         if(sellerDto != null && sellerDto.getId() != null) {
             return sellerService.update(sellerDto);

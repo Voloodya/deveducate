@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         orderEntity.setCustomer(customerEntity);
         orderEntity.setOrderTotal(10);
         orderRepository.save(orderEntity);
-        orderDto.setOrderId(orderEntity.getOrderId());
+        orderDto.setId(orderEntity.getOrderId());
 
         return orderDto;
     }
@@ -101,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getCurrentDate() {
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         Date date = new Date();
-        BooleanExpression isCurrentDate = qOrder.orderTimestam.between(date, DateUtils.addDays(new Date(), 1));
+        BooleanExpression isCurrentDate = qOrder.orderTimestamp.between(date, DateUtils.addDays(new Date(), 1));
         Iterable<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        OrderEntity orderEntity = orderRepository.findById(orderDto.getOrderId()).orElseThrow(() -> new EntityNotFoundException());
+        OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());
         if (orderEntity != null) {
             orderRepository.save(orderEntity);
             // ...

@@ -7,7 +7,7 @@ import ru.cinimex.deveducate.service.KafkaListenerService;
 import ru.cinimex.deveducate.service.KafkaProducerService;
 
 @RequiredArgsConstructor
-@RestController
+@RestControllerAdvice
 @RequestMapping("/kafka")
 public class KafkaController {
 
@@ -21,8 +21,8 @@ public class KafkaController {
     }
 
     @GetMapping("{id}")
-    public void get(@PathVariable(value = "id") int id) {
+    public CustomerDto get(@PathVariable(value = "id") int id) {
 
-        kafkaListener.getCustomer(id);
+        return kafkaListener.getCustomer(id);
     }
 }
