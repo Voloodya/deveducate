@@ -1,8 +1,8 @@
 spring:
   datasource:
     platform: postgres
-    #    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
-    url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
+    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
+    #url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
     username: 'vlutsenko'
     password: 'vlutsenko'
     driver-class-name: org.postgresql.Driver
@@ -12,11 +12,13 @@ spring:
     generate-ddl: false
     hibernate.ddl-auto: none
   liquibase:
-    #    change-log: 'classpath:liquibase/db.changelog-master.xml'
-    #url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
-    url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
+    enabled: true
+    #change-log: 'classpath: db/changelog/db.changelog-master.yaml'
+    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
+    #url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
     user: 'vlutsenko'
     password: 'vlutsenko'
+
   kafka:
     bootstrap-servers: localhost:29092
     consumer:
