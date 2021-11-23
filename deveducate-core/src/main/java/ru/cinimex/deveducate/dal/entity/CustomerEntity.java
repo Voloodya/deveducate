@@ -1,9 +1,23 @@
 package ru.cinimex.deveducate.dal.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,8 +30,10 @@ import java.util.Objects;
 @Entity
 @Table(name = "customers", schema = "vlutsenko")
 public class CustomerEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customers_customer_id_seq")
+    @SequenceGenerator(name = "customers_customer_id_seq", sequenceName = "customers_customer_id_seq")
     @Column(name = "CUSTOMER_ID", nullable = false, unique = true)
     private Integer customerId;
 

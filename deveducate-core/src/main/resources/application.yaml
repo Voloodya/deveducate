@@ -18,7 +18,7 @@ spring:
     user: 'vlutsenko'
     password: 'vlutsenko'
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
     consumer:
       group-id: group_vlutsenko
       auto-offset-reset: earliest
