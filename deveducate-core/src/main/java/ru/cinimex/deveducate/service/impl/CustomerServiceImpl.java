@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             customerRepository.deleteById(id);
         } catch (EntityNotFoundException ex) {
-            new EntityNotFoundException();
+            System.out.println(ex.getMessage());
         }
     }
 
