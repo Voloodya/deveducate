@@ -81,7 +81,7 @@ sourceSets {
 }
 
 bootJar {
-    baseName 'deveducate'
+    archiveName 'deveducate.jar'
 }
 
 test {
