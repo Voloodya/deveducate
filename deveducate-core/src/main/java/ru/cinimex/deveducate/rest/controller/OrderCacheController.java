@@ -11,7 +11,7 @@ import ru.cinimex.deveducate.service.OrdersCacheService;
 @RequestMapping("/cache")
 public class OrderCacheController {
 
-    private  final OrdersCacheService ordersCacheService;
+    private final OrdersCacheService ordersCacheService;
 
     @GetMapping(path = "{id}")
     public OrderDto get(@PathVariable(value = "id") Long id) {

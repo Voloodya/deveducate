@@ -2,18 +2,12 @@ package ru.cinimex.deveducate.rest.controller;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.ErrorMessage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.server.ServerErrorException;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
-import ru.cinimex.deveducate.rest.exception.RestExceptionHandler;
 import ru.cinimex.deveducate.service.SellerService;
 
-import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
 import java.util.List;
 
@@ -28,7 +22,7 @@ public class SellerController {
     @GetMapping("/{id}")
     public SellerDto get(@PathVariable(value = "id") int id) throws ValidationException {
 
-        if(id < 0) {
+        if (id < 0) {
             throw new ValidationException("");
         }
         return sellerService.get(id);
@@ -36,7 +30,7 @@ public class SellerController {
 
     @PostMapping()
     public SellerDto save(@RequestBody SellerDto sellerDto) throws ValidationException {
-        if(sellerDto == null) {
+        if (sellerDto == null) {
             throw new ValidationException("");
         }
         return sellerService.save(sellerDto);
@@ -51,9 +45,9 @@ public class SellerController {
     @PutMapping()
     public SellerDto update(@RequestBody SellerDto sellerDto) throws ValidationException {
 
-        if(sellerDto != null && sellerDto.getId() != null) {
+        if (sellerDto != null && sellerDto.getId() != null) {
             return sellerService.update(sellerDto);
-        }else{
+        } else {
             throw new ValidationException("");
         }
     }

@@ -1,7 +1,7 @@
 spring:
   datasource:
     platform: postgres
-#    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
+    #    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
     url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
     username: 'vlutsenko'
     password: 'vlutsenko'
@@ -12,7 +12,7 @@ spring:
     generate-ddl: false
     hibernate.ddl-auto: none
   liquibase:
-#    change-log: 'classpath:liquibase/db.changelog-master.xml'
+    #    change-log: 'classpath:liquibase/db.changelog-master.xml'
     #url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
     url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
     user: 'vlutsenko'

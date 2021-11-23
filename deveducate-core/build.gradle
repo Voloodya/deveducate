@@ -23,7 +23,7 @@ repositories {
 ext {
     set('springCloudVersion', "2020.0.4")
     set('queryDslVersion', '4.2.2')
-    set('generatedSourceDir',"$buildDir/generated-source")
+    set('generatedSourceDir', "$buildDir/generated-source")
 }
 
 dependencies {

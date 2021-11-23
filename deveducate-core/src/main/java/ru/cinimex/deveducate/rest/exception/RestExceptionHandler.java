@@ -1,10 +1,7 @@
 package ru.cinimex.deveducate.rest.exception;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,7 +26,7 @@ public class RestExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage badRequestException(ValidationException ex, WebRequest request) {
         return new ErrorMessage(
-                "Некорректный запрос! "+ ex.getMessage()
+                "Некорректный запрос! " + ex.getMessage()
         );
     }
 

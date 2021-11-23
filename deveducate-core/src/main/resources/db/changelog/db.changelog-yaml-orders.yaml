@@ -49,12 +49,12 @@ databaseChangeLog:
                     referencedColumnNames: CUSTOMER_ID
                     onDelete: SET NULL
                     onUpdate: RESTRICT
-#              - addForeignKeyConstraint:
-#                  baseTableName: Orders
-#                  baseColumnNames: CUSTOMER_ID
-#                  referencedTableName: Customers
-#                  referencedColumnNames: CUSTOMER_ID
-#                  constraintName: fk_orders_customers
-#                  onDelete: SET NULL
-#                  onUpdate: RESTRICT
+            #              - addForeignKeyConstraint:
+            #                  baseTableName: Orders
+            #                  baseColumnNames: CUSTOMER_ID
+            #                  referencedTableName: Customers
+            #                  referencedColumnNames: CUSTOMER_ID
+            #                  constraintName: fk_orders_customers
+            #                  onDelete: SET NULL
+            #                  onUpdate: RESTRICT
             tableName: orders

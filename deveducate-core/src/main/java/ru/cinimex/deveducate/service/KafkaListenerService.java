@@ -18,21 +18,21 @@ public class KafkaListenerService {
 
 
     @KafkaListener(topics = "vlutsenko-customers", groupId = "group_vlutsenko")
-    public void consume(CustomerDto consumerDto){
+    public void consume(CustomerDto consumerDto) {
 
-        concurrentHashMap.put(consumerDto.getId(),consumerDto);
+        concurrentHashMap.put(consumerDto.getId(), consumerDto);
         //logger.info("#### -> Consumed message -> {}", consumerDto);
 
     }
 
-    public CustomerDto getCustomer(int id){
+    public CustomerDto getCustomer(int id) {
 
         CustomerDto customerDto = null;
 
-        try{
+        try {
             customerDto = concurrentHashMap.get(id);
             concurrentHashMap.remove(id);
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
         return customerDto;

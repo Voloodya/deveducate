@@ -3,7 +3,6 @@ package ru.cinimex.deveducate.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
 
 import java.util.List;

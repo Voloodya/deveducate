@@ -3,7 +3,6 @@ package ru.cinimex.deveducate.rest.filter;
 import org.springframework.data.jpa.domain.Specification;
 import ru.cinimex.deveducate.dal.entity.OrderEntity;
 
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 
 public final class OrderSpecification {

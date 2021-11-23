@@ -15,29 +15,29 @@ public class ConfigurableMapperOrika extends ConfigurableMapper {
 
     protected void configure(MapperFactory factory) {
         factory.classMap(CustomerEntity.class, CustomerDto.class)
-                .field("customerId","id")
-                .field("custFirstName","firstName")
-                .field("custLastName","lastName")
-                .field("phoneNumber1","phone1")
-                .field("phoneNumber2","phone2")
-                .field("custStreetAddress1","street1")
-                .field("custStreetAddress2","street2")
-                .field("custCity","city")
-                .field("custPostalCode","postal")
-                .field("custEmail","email")
+                .field("customerId", "id")
+                .field("custFirstName", "firstName")
+                .field("custLastName", "lastName")
+                .field("phoneNumber1", "phone1")
+                .field("phoneNumber2", "phone2")
+                .field("custStreetAddress1", "street1")
+                .field("custStreetAddress2", "street2")
+                .field("custCity", "city")
+                .field("custPostalCode", "postal")
+                .field("custEmail", "email")
                 .register();
         factory.classMap(SellerEntity.class, SellerDto.class)
-                .field("sellerId","id")
-                .field("sellerName","name")
-                .field("expiresOn","updateOn")
+                .field("sellerId", "id")
+                .field("sellerName", "name")
+                .field("expiresOn", "updateOn")
                 .register();
         factory.classMap(SellerDto.class, SellerEntity.class)
-                .field("id","sellerId")
-                .field("name","sellerName")
+                .field("id", "sellerId")
+                .field("name", "sellerName")
                 .field("updateOn", "expiresOn")
                 .register();
         factory.classMap(OrderEntity.class, OrderDto.class)
-                .field("orderId","id")
+                .field("orderId", "id")
                 .register();
     }
 

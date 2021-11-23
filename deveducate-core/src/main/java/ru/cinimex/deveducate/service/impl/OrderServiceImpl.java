@@ -112,11 +112,11 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getByCustomer(Integer id) {
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         BooleanExpression isCustomer = qOrder.customer.customerId.eq(id);
-        List<OrderEntity> orderEntityList =null;
+        List<OrderEntity> orderEntityList = null;
         try {
             orderEntityList = (List<OrderEntity>) orderRepository.findAll(isCustomer);
-        }catch (Exception ex){
-            logger.error("Исключение в методе getByCustomer: " , ex);
+        } catch (Exception ex) {
+            logger.error("Исключение в методе getByCustomer: ", ex);
         }
         List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 

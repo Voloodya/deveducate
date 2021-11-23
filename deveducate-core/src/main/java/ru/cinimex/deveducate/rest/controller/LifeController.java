@@ -15,7 +15,7 @@ import java.util.Date;
 public class LifeController {
 
     @GetMapping(path = "/alive", produces = "application/json")
-    public ResponseEntity<LifeDto> alive(){
+    public ResponseEntity<LifeDto> alive() {
 
         return new ResponseEntity<>(new LifeDto(true, new Date()), HttpStatus.OK);
     }

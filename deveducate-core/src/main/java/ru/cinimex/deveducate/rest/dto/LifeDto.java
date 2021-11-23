@@ -14,7 +14,7 @@ public class LifeDto {
 
     private boolean alive;
     private Date date;
-    
+
     @Override
     public String toString() {
         return "Life{" +

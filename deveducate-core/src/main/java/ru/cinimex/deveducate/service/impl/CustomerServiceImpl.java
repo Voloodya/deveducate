@@ -57,8 +57,8 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto update(CustomerDto customerDto) {
         CustomerEntity customerEntity = customerRepository.findById(customerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
 
-            customerRepository.save(customerEntity);
-            // ...
+        customerRepository.save(customerEntity);
+        // ...
         return customerDto;
     }
 
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void remove(int id) {
         try {
             customerRepository.deleteById(id);
-        }catch (EntityNotFoundException ex){
+        } catch (EntityNotFoundException ex) {
             new EntityNotFoundException();
         }
     }
