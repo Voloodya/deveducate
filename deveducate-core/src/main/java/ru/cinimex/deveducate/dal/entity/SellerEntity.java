@@ -35,7 +35,7 @@ import java.util.Objects;
 public class SellerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sellers_seller_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "sellers_seller_id_seq")
     @SequenceGenerator(name = "sellers_seller_id_seq", sequenceName = "sellers_seller_id_seq")
     @Column(name = "SELLER_ID", nullable = false, unique = true)
     private Integer sellerId;
