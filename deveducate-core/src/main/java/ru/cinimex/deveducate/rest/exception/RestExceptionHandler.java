@@ -42,8 +42,10 @@ public class RestExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage exception(Exception ex, WebRequest request) {
         return new ErrorMessage(
-                "Неизвестная ошибка сервера!" + ex.getMessage() + "  getLocalizedMessage:"+ex.getLocalizedMessage() +
-                        " StackTrace:" + ex.getStackTrace()
+                "Неизвестная ошибка сервера! " + ex.getMessage() + "  getLocalizedMessage:"+ex.getLocalizedMessage() +
+                        " StackTrace:" + ex.getStackTrace() + " Request:" + request.getContextPath() + "; "+
+                        request.getDescription(false) + "; Parameters:" + request.getParameterMap() +
+                        "; ParameterNames" + request.getParameterNames()
         );
     }
 
