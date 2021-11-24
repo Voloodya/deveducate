@@ -21,9 +21,9 @@ public class KafkaConfiguration {
 
     @Value(value = "${spring.kafka.bootstrap-servers: localhost:9092}") // localhost:9092 - default value
     private String bootstrapServers;
-    private final static String nameTopic = "vlutsenko-customers";
-    private final static int partitionsCount = 6;
-    private final static int replicasCount = 3;
+    private static final String NAME_TOPIC = "vlutsenko-customers";
+    private static final int PARTITIONS_COUNT = 6;
+    private static final int REPLICAS_COUNT = 3;
 
     @Bean
     public KafkaAdmin admin() {
@@ -36,9 +36,9 @@ public class KafkaConfiguration {
     @Bean
     public NewTopic topicSettings() {
 
-        return TopicBuilder.name(nameTopic)
-                .partitions(partitionsCount)
-                .replicas(replicasCount)
+        return TopicBuilder.name(NAME_TOPIC)
+                .partitions(PARTITIONS_COUNT)
+                .replicas(REPLICAS_COUNT)
                 .build();
     }
 

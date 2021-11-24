@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final SellerRepository sellerRepository;
     private final CustomerRepository customerRepository;
-    private final static int numberTotal = 10;
+    private static final int NUMBERTOTAL = 10;
 
     @Override
     public OrderDto get(int id) {
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
             orderEntity.setCustomer(customerEntity);
         }
         if (orderDto.getOrderTotal() == null) {
-            orderEntity.setOrderTotal(numberTotal);
+            orderEntity.setOrderTotal(NUMBERTOTAL);
         }
         orderRepository.save(orderEntity);
         orderDto.setId(orderEntity.getOrderId());
@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        //OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());
+        //*//OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());//
         int count = orderRepository.updateOrderSetOrderTotal(orderDto.getOrderTotal(), orderDto.getId());
         if (count > 0) {
             return orderDto;
