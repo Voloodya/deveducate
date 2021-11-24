@@ -13,6 +13,7 @@ import ru.cinimex.deveducate.rest.dto.SellerDto;
 @Component
 public class ConfigurableMapperOrika extends ConfigurableMapper {
 
+    @Override
     protected void configure(MapperFactory factory) {
         factory.classMap(CustomerEntity.class, CustomerDto.class)
                 .field("customerId", "id")

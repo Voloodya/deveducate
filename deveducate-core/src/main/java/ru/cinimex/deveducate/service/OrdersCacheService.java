@@ -25,6 +25,8 @@ public class OrdersCacheService {
 
     @CacheEvict(value = "orders", allEntries = true)
     public void clear() {
+        // Данный метод очищает кеш с именем "orders", который создается в методе get(Long id).
+        // "allEntries = true" - очищает полностью
     }
 
     public void put(OrderDto orderDto) {

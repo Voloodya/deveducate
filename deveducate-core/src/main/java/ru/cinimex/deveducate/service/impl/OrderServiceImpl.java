@@ -71,13 +71,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getAll() {
         Iterable<OrderEntity> orderEntityList = orderRepository.findAll();
-        List<OrderDto> orderDtoList = null;
+        List<OrderDto> orderDtoList = new ArrayList<>();
 
-        if (orderEntityList != null) {
-            orderDtoList = new ArrayList<OrderDto>();
             for (OrderEntity order : orderEntityList) {
                 orderDtoList.add(objectEntityMapsToObjectDto(order));
-            }
         }
         return orderDtoList;
     }

@@ -10,6 +10,7 @@ import org.springframework.web.server.ServerErrorException;
 
 import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
+import java.util.Arrays;
 
 @RestControllerAdvice
 public class RestExceptionHandler {
@@ -43,7 +44,7 @@ public class RestExceptionHandler {
     public ErrorMessage exception(Exception ex, WebRequest request) {
         return new ErrorMessage(
                 "Неизвестная ошибка сервера! " + ex.getMessage() + "  getLocalizedMessage:" + ex.getLocalizedMessage() +
-                        " StackTrace:" + ex.getStackTrace().toString() + " Request:" + request.getContextPath() + "; " +
+                        " StackTrace:" + Arrays.toString(ex.getStackTrace()) + " Request:" + request.getContextPath() + "; " +
                         request.getDescription(false) + "; Parameters:" + request.getParameterMap() +
                         "; ParameterNames" + request.getParameterNames()
         );

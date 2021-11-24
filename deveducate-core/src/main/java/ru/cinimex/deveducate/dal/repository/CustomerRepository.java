@@ -12,12 +12,9 @@ import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 @Transactional
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Integer> {
 
-    //@Query(value = "SELECT * FROM customers", nativeQuery = true)
-    //List<CustomerEntity> findAll();
     @Modifying
     @Query("update CustomerEntity c set c.custFirstName = :firstName, c.custLastName = :lastName where c.customerId = :customerId")
     int updateCustomerSetName(@Param("customerId") Integer customerId,
                               @Param("firstName") String firstName,
                               @Param("lastName") String lastName);
-
 }
