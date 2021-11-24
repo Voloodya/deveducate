@@ -12,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -55,8 +56,9 @@ public class SellerServiceImpl implements SellerService {
     public SellerDto update(SellerDto sellerDto) {
         //SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
         Date date = sellerDto.getUpdateOn() != null ? sellerDto.getUpdateOn() : new Date();
-        sellerRepository.updateSellerSetExpiresOnAndName(sellerDto.getId(),date,sellerDto.getName());
-        return sellerDto;
+        int id = sellerRepository.updateSellerSetExpiresOnAndName(sellerDto.getId(), date, sellerDto.getName());
+        SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
+        return objectEntityMapsToObjectDto(sellerEntity);
     }
 
     @Override

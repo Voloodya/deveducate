@@ -57,8 +57,12 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto update(CustomerDto customerDto) {
         //CustomerEntity customerEntity = customerRepository.findById(customerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
 
-        customerRepository.updateCustomerSetName(customerDto.getId(),customerDto.getFirstName(),customerDto.getLastName());
-        return customerDto;
+        int id = customerRepository.updateCustomerSetName(customerDto.getId(),customerDto.getFirstName(),customerDto.getLastName());
+        if(id > 0) {
+            return customerDto;
+        }else{
+            return null;
+        }
     }
 
     @Override
