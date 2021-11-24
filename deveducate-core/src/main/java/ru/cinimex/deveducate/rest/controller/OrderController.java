@@ -78,9 +78,9 @@ public class OrderController {
     // http://localhost:8080/orders/pageable?page=2&size=2
     @GetMapping(path = "/pageable")
     public Page<OrderDto> getPage(int page, int size) {
-
+        int orderTotal = 5;
         Pageable pageable = PageRequest.of(page - 1, size);
-        return orderService.getPage(pageable);
+        return orderService.getSpecificPage(pageable, orderTotal);
     }
 
     // http://localhost:8080/orders/pageablespecific?page=1&size=2&orderTotal=5
