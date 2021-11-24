@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        //*//OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());//
+        // Для update через save: "OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());"
         int count = orderRepository.updateOrderSetOrderTotal(orderDto.getOrderTotal(), orderDto.getId());
         if (count > 0) {
             return orderDto;
