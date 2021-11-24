@@ -18,10 +18,9 @@ import java.util.Map;
 @Configuration
 public class KafkaConfiguration {
 
-
-    private final String nameTopic = "vlutsenko-customers";
-    private final int partitions = 6;
-    private final int replicas = 3;
+    private final static String nameTopic = "vlutsenko-customers";
+    private final static int partitions = 6;
+    private final static int replicas = 3;
     @Value(value = "${spring.kafka.bootstrap-servers: localhost:9092}") // localhost:9092 - default value
     private String bootstrapServers;
 
@@ -35,11 +34,11 @@ public class KafkaConfiguration {
 
     @Bean
     public NewTopic topicSettings() {
-        NewTopic newTopic = TopicBuilder.name(nameTopic)
+
+        return TopicBuilder.name(nameTopic)
                 .partitions(partitions)
                 .replicas(replicas)
                 .build();
-        return newTopic;
     }
 
 }
