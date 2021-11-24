@@ -33,7 +33,7 @@ databaseChangeLog:
                   name: SELLER_ID
                   type: INT
                   constraints:
-                    nullable: false
+                    nullable: true
                     foreignKeyName: fk_orders_sellers
                     referencedTableName: sellers
                     referencedColumnNames: SELLER_ID
@@ -43,7 +43,7 @@ databaseChangeLog:
                   name: CUSTOMER_ID
                   type: INT
                   constraints:
-                    nullable: false
+                    nullable: true
                     foreignKeyName: fk_orders_customers
                     referencedTableName: customers
                     referencedColumnNames: CUSTOMER_ID

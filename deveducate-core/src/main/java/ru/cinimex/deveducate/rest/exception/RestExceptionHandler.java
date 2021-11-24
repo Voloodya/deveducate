@@ -15,12 +15,12 @@ import java.util.Arrays;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
-    private static final String GETLOCALIZED_MESSAGE = " \\n GetLocalizedMessage:";
-    private static final String STACK_TRACE = "; \\n  StackTrace:";
-    private static final String REQUEST = "; \\n Request:";
-    private static final String DESCRIPTION = "; \\n  Description:";
-    private static final String PARAMETERS = "; \\n Parameters:";
-    private static final String PARAMETER_NAMES = "; \\n ParameterNames:";
+    private static final String GETLOCALIZED_MESSAGE = " \n GetLocalizedMessage:";
+    private static final String STACK_TRACE = "; \n  StackTrace:";
+    private static final String REQUEST = "; \n Request:";
+    private static final String DESCRIPTION = "; \n  Description:";
+    private static final String PARAMETERS = "; \n Parameters:";
+    private static final String PARAMETER_NAMES = "; \n ParameterNames:";
 
     @ExceptionHandler(value = {EntityNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
