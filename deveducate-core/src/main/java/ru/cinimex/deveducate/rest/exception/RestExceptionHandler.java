@@ -34,7 +34,7 @@ public class RestExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage internalServerException(ServerErrorException ex, WebRequest request) {
         return new ErrorMessage(
-                "Ошибка сервера!"
+                "Ошибка сервера!" + ex.getMessage()
         );
     }
 
@@ -42,7 +42,8 @@ public class RestExceptionHandler {
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage exception(Exception ex, WebRequest request) {
         return new ErrorMessage(
-                "НЕизвестная ошибка сервера!"
+                "Неизвестная ошибка сервера!" + ex.getMessage() + "  getLocalizedMessage:"+ex.getLocalizedMessage() +
+                        " StackTrace:" + ex.getStackTrace()
         );
     }
 
