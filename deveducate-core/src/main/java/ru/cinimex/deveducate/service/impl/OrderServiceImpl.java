@@ -34,12 +34,12 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private final static int numberTotal = 10;
     private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
     private final SellerRepository sellerRepository;
     private final CustomerRepository customerRepository;
+    private final static int numberTotal = 10;
 
     @Override
     public OrderDto get(int id) {
