@@ -53,11 +53,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto save(OrderDto orderDto) {
         OrderEntity orderEntity = objectDtoMapsToObjectEntity(orderDto);
-        SellerEntity sellerEntity = sellerRepository.findById(orderDto.getSeller().getId()).orElseThrow(() -> new EntityNotFoundException());
-        CustomerEntity customerEntity = customerRepository.findById(orderDto.getCustomer().getId()).orElseThrow(() -> new EntityNotFoundException());
-        orderEntity.setSeller(sellerEntity);
-        orderEntity.setCustomer(customerEntity);
-        orderEntity.setOrderTotal(10);
+        if(orderEntity.getCustomer() != null && orderEntity.getSeller() != null) {
+            SellerEntity sellerEntity = sellerRepository.findById(orderDto.getSeller().getId()).orElseThrow(() -> new EntityNotFoundException());
+            CustomerEntity customerEntity = customerRepository.findById(orderDto.getCustomer().getId()).orElseThrow(() -> new EntityNotFoundException());
+            orderEntity.setSeller(sellerEntity);
+            orderEntity.setCustomer(customerEntity);
+        }
+        if(orderDto.getOrderTotal() == null) {
+            orderEntity.setOrderTotal(10);
+        }
         orderRepository.save(orderEntity);
         orderDto.setId(orderEntity.getOrderId());
 

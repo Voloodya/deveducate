@@ -43,7 +43,7 @@ public class RestExceptionHandler {
     public ErrorMessage exception(Exception ex, WebRequest request) {
         return new ErrorMessage(
                 "Неизвестная ошибка сервера! " + ex.getMessage() + "  getLocalizedMessage:"+ex.getLocalizedMessage() +
-                        " StackTrace:" + ex.getStackTrace() + " Request:" + request.getContextPath() + "; "+
+                        " StackTrace:" + ex.getStackTrace().toString() + " Request:" + request.getContextPath() + "; "+
                         request.getDescription(false) + "; Parameters:" + request.getParameterMap() +
                         "; ParameterNames" + request.getParameterNames()
         );
