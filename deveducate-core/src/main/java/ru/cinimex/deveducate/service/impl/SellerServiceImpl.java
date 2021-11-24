@@ -12,7 +12,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -41,13 +40,10 @@ public class SellerServiceImpl implements SellerService {
     @Override
     public List<SellerDto> getAll() {
         Iterable<SellerEntity> sellerEntityList = sellerRepository.findAll();
-        List<SellerDto> sellerDtoList = null;
+        List<SellerDto> sellerDtoList = new ArrayList<>();
 
-        if (sellerEntityList != null) {
-            sellerDtoList = new ArrayList<SellerDto>();
-            for (SellerEntity seller : sellerEntityList) {
-                sellerDtoList.add(objectEntityMapsToObjectDto(seller));
-            }
+        for (SellerEntity seller : sellerEntityList) {
+            sellerDtoList.add(objectEntityMapsToObjectDto(seller));
         }
         return sellerDtoList;
     }
@@ -56,7 +52,7 @@ public class SellerServiceImpl implements SellerService {
     public SellerDto update(SellerDto sellerDto) {
         //SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
         Date date = sellerDto.getUpdateOn() != null ? sellerDto.getUpdateOn() : new Date();
-        int id = sellerRepository.updateSellerSetExpiresOnAndName(sellerDto.getId(), date, sellerDto.getName());
+        sellerRepository.updateSellerSetExpiresOnAndName(sellerDto.getId(), date, sellerDto.getName());
         SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
         return objectEntityMapsToObjectDto(sellerEntity);
     }

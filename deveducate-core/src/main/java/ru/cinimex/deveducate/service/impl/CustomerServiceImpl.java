@@ -2,12 +2,15 @@ package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
 import ru.cinimex.deveducate.service.CustomerService;
+import ru.cinimex.deveducate.service.KafkaProducerService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import java.util.List;
 @Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final CustomerRepository customerRepository;
 
@@ -42,25 +46,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerDto> getAll() {
         Iterable<CustomerEntity> customerEntityList = customerRepository.findAll();
-        List<CustomerDto> customerDtoList = null;
+        List<CustomerDto> customerDtoList = new ArrayList<>();
 
-        if (customerEntityList != null) {
-            customerDtoList = new ArrayList<CustomerDto>();
-            for (CustomerEntity customer : customerEntityList) {
-                customerDtoList.add(objectEntityMapsToObjectDto(customer));
-            }
+        for (CustomerEntity customer : customerEntityList) {
+            customerDtoList.add(objectEntityMapsToObjectDto(customer));
         }
         return customerDtoList;
     }
 
     @Override
     public CustomerDto update(CustomerDto customerDto) {
-        //CustomerEntity customerEntity = customerRepository.findById(customerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
 
-        int id = customerRepository.updateCustomerSetName(customerDto.getId(),customerDto.getFirstName(),customerDto.getLastName());
-        if(id > 0) {
+        int id = customerRepository.updateCustomerSetName(customerDto.getId(), customerDto.getFirstName(), customerDto.getLastName());
+        if (id > 0) {
             return customerDto;
-        }else{
+        } else {
             return null;
         }
     }
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             customerRepository.deleteById(id);
         } catch (EntityNotFoundException ex) {
-            System.out.println(ex.getMessage());
+            logger.error("Error in CustomerServiceImpl", ex);
         }
     }
 

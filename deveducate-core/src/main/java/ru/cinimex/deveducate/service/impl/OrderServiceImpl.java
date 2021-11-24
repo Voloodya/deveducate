@@ -40,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final SellerRepository sellerRepository;
     private final CustomerRepository customerRepository;
-
+    private final int numberTotal = 10;
 
     @Override
     public OrderDto get(int id) {
@@ -53,14 +53,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto save(OrderDto orderDto) {
         OrderEntity orderEntity = objectDtoMapsToObjectEntity(orderDto);
-        if(orderEntity.getCustomer() != null && orderEntity.getSeller() != null) {
+        if (orderEntity.getCustomer() != null && orderEntity.getSeller() != null) {
             SellerEntity sellerEntity = sellerRepository.findById(orderDto.getSeller().getId()).orElseThrow(() -> new EntityNotFoundException());
             CustomerEntity customerEntity = customerRepository.findById(orderDto.getCustomer().getId()).orElseThrow(() -> new EntityNotFoundException());
             orderEntity.setSeller(sellerEntity);
             orderEntity.setCustomer(customerEntity);
         }
-        if(orderDto.getOrderTotal() == null) {
-            orderEntity.setOrderTotal(10);
+        if (orderDto.getOrderTotal() == null) {
+            orderEntity.setOrderTotal(numberTotal);
         }
         orderRepository.save(orderEntity);
         orderDto.setId(orderEntity.getOrderId());
@@ -140,9 +140,9 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto update(OrderDto orderDto) {
         //OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());
         int count = orderRepository.updateOrderSetOrderTotal(orderDto.getOrderTotal(), orderDto.getId());
-        if(count>0){
-        return orderDto;
-        }else{
+        if (count > 0) {
+            return orderDto;
+        } else {
             return null;
         }
     }

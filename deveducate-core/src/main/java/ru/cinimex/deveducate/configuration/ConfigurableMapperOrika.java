@@ -26,11 +26,6 @@ public class ConfigurableMapperOrika extends ConfigurableMapper {
                 .field("custPostalCode", "postal")
                 .field("custEmail", "email")
                 .register();
-        factory.classMap(SellerEntity.class, SellerDto.class)
-                .field("sellerId", "id")
-                .field("sellerName", "name")
-                .field("expiresOn", "updateOn")
-                .register();
         factory.classMap(SellerDto.class, SellerEntity.class)
                 .field("id", "sellerId")
                 .field("name", "sellerName")

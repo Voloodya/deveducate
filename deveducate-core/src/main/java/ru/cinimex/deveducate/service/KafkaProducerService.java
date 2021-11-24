@@ -17,7 +17,7 @@ public class KafkaProducerService {
     private final KafkaTemplate<String, CustomerDto> kafkaTemplate;
 
     public void sendData(CustomerDto customerDto) {
-        logger.info(String.format("#### -> Producing message -> %s", customerDto));
+        logger.info("#### -> Producing message -> %s", customerDto);
         this.kafkaTemplate.send(TOPIC, customerDto);
     }
 

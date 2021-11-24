@@ -32,7 +32,7 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "orders", schema = "vlutsenko")
-public class OrderEntity implements Serializable {
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_order_id_seq")
@@ -57,8 +57,12 @@ public class OrderEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
         OrderEntity that = (OrderEntity) o;
         return orderId != null && Objects.equals(orderId, that.orderId);
     }

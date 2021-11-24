@@ -69,8 +69,12 @@ public class SellerEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+            return false;
+        }
         SellerEntity that = (SellerEntity) o;
         return sellerId != null && Objects.equals(sellerId, that.sellerId);
     }

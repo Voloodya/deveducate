@@ -21,7 +21,6 @@ public class KafkaListenerService {
     public void consume(CustomerDto consumerDto) {
 
         concurrentHashMap.put(consumerDto.getId(), consumerDto);
-        //logger.info("#### -> Consumed message -> {}", consumerDto);
 
     }
 
@@ -33,7 +32,7 @@ public class KafkaListenerService {
             customerDto = concurrentHashMap.get(id);
             concurrentHashMap.remove(id);
         } catch (Exception ex) {
-
+            logger.error("Error in KafkaListenerService: ", ex);
         }
         return customerDto;
     }

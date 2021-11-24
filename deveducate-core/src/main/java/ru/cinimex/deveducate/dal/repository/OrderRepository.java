@@ -24,9 +24,4 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Integer>, Jp
     @Query(value = "SELECT * FROM Orders ord WHERE ord.order_total = :count", nativeQuery = true)
     List<OrderEntity> findByOrderTotal(@Param("count") Integer count);
 
-//    @Query("select ord from OrderEntity ord")
-//    Slice<OrderEntity> findAllSlice(Pageable pageable);
-//
-//    @Query("select ord from OrderEntity ord")
-//    Page<OrderEntity> findAll(Specification specification, Pageable pageable);
 }
