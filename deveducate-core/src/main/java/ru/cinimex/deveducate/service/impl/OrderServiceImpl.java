@@ -134,11 +134,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());
-        if (orderEntity != null) {
-            orderRepository.save(orderEntity);
-            // ...
-        }
+        //OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());
+        orderRepository.updateOrderSetOrderTotal(orderDto.getOrderTotal(), orderDto.getId());
         return orderDto;
     }
 

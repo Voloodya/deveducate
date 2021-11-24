@@ -10,6 +10,7 @@ import ru.cinimex.deveducate.service.SellerService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -52,11 +53,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public SellerDto update(SellerDto sellerDto) {
-        SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
-        if (sellerEntity != null) {
-            sellerRepository.save(sellerEntity);
-            // ...
-        }
+        //SellerEntity sellerEntity = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new EntityNotFoundException());
+        Date date = sellerDto.getUpdateOn() != null ? sellerDto.getUpdateOn() : new Date();
+        sellerRepository.updateSellerSetExpiresOnAndName(sellerDto.getId(),date,sellerDto.getName());
         return sellerDto;
     }
 
