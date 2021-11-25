@@ -34,19 +34,18 @@ import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+    private static final int NUMBERTOTAL = 10;
     private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
     private final SellerRepository sellerRepository;
     private final CustomerRepository customerRepository;
-    private static final int NUMBERTOTAL = 10;
 
     @Override
     public OrderDto get(int id) {
         OrderEntity orderEntityOpt = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
-        OrderDto orderDto = objectEntityMapsToObjectDto(orderEntityOpt);
 
-        return orderDto;
+        return objectEntityMapsToObjectDto(orderEntityOpt);
     }
 
     @Override
@@ -61,10 +60,9 @@ public class OrderServiceImpl implements OrderService {
         if (orderDto.getOrderTotal() == null) {
             orderEntity.setOrderTotal(NUMBERTOTAL);
         }
-        orderRepository.save(orderEntity);
-        orderDto.setId(orderEntity.getOrderId());
+        OrderEntity newOrderEntity = orderRepository.save(orderEntity);
 
-        return orderDto;
+        return objectEntityMapsToObjectDto(newOrderEntity);
     }
 
     @Override
@@ -103,9 +101,8 @@ public class OrderServiceImpl implements OrderService {
         Date date = new Date();
         BooleanExpression isCurrentDate = qOrder.orderTimestamp.between(date, DateUtils.addDays(new Date(), 1));
         Iterable<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
-        List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
-        return orderDtoList;
+        return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
     }
 
     @Override
@@ -118,17 +115,15 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception ex) {
             logger.error("Исключение в методе getByCustomer: ", ex);
         }
-        List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
-        return orderDtoList;
+        return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
     }
 
     @Override
     public List<OrderDto> getByOrderTotal(int count) {
         List<OrderEntity> orderEntityList = orderRepository.findByOrderTotal(count);
-        List<OrderDto> orderDtoList = mapperFactory.mapAsList(orderEntityList, OrderDto.class);
 
-        return orderDtoList;
+        return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
     }
 
 
@@ -146,19 +141,22 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void remove(int id) {
-        orderRepository.deleteById(id);
+        try {
+            orderRepository.deleteById(id);
+        }catch (Exception ex){
+            logger.error("Error in OrderServiceImpl: ", ex);
+
+        }
     }
 
     public OrderDto objectEntityMapsToObjectDto(OrderEntity objectEntity) {
-        OrderDto orderDto = mapperFactory.map(objectEntity, OrderDto.class);
 
-        return orderDto;
+        return mapperFactory.map(objectEntity, OrderDto.class);
     }
 
     public OrderEntity objectDtoMapsToObjectEntity(OrderDto objectDto) {
-        OrderEntity orderEntity = mapperFactory.map(objectDto, OrderEntity.class);
 
-        return orderEntity;
+        return mapperFactory.map(objectDto, OrderEntity.class);
     }
 
 }

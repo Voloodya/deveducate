@@ -1,6 +1,8 @@
 package ru.cinimex.deveducate.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.SellerEntity;
@@ -17,24 +19,23 @@ import java.util.List;
 @Service
 public class SellerServiceImpl implements SellerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(SellerServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final SellerRepository sellerRepository;
 
     @Override
     public SellerDto get(int id) {
         SellerEntity sellerEntityOpt = sellerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
-        SellerDto sellerDto = objectEntityMapsToObjectDto(sellerEntityOpt);
 
-        return sellerDto;
+        return objectEntityMapsToObjectDto(sellerEntityOpt);
     }
 
     @Override
     public SellerDto save(SellerDto sellerDto) {
         SellerEntity sellerEntity = objectDtoMapsToObjectEntity(sellerDto);
-        sellerRepository.save(sellerEntity);
-        sellerDto.setId(sellerEntity.getSellerId());
+        SellerEntity newSellerEntity = sellerRepository.save(sellerEntity);
 
-        return sellerDto;
+        return objectEntityMapsToObjectDto(newSellerEntity);
     }
 
     @Override
@@ -59,19 +60,21 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public void remove(int id) {
-        sellerRepository.deleteById(id);
+        try {
+            sellerRepository.deleteById(id);
+        }catch (Exception ex){
+            logger.error("Error in the class SellerServiceImpl: ",ex);
+        }
     }
 
     public SellerDto objectEntityMapsToObjectDto(SellerEntity objectEntity) {
-        SellerDto sellerDto = mapperFactory.map(objectEntity, SellerDto.class);
 
-        return sellerDto;
+        return mapperFactory.map(objectEntity, SellerDto.class);
     }
 
     public SellerEntity objectDtoMapsToObjectEntity(SellerDto objectDto) {
-        SellerEntity sellerEntity = mapperFactory.map(objectDto, SellerEntity.class);
 
-        return sellerEntity;
+        return mapperFactory.map(objectDto, SellerEntity.class);
     }
 
 }

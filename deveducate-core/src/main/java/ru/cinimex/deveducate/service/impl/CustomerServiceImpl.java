@@ -10,7 +10,6 @@ import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
 import ru.cinimex.deveducate.service.CustomerService;
-import ru.cinimex.deveducate.service.KafkaProducerService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -21,26 +20,24 @@ import java.util.List;
 @Slf4j
 public class CustomerServiceImpl implements CustomerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
+    private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final CustomerRepository customerRepository;
 
     @Override
     public CustomerDto get(int id) {
         CustomerEntity customerEntityOpt = customerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
-        CustomerDto customerDto = objectEntityMapsToObjectDto(customerEntityOpt);
 
-        return customerDto;
+        return objectEntityMapsToObjectDto(customerEntityOpt);
     }
 
     @Override
     public CustomerDto save(CustomerDto customerDto) {
 
         CustomerEntity customerEntity = objectDtoMapsToObjectEntity(customerDto);
-        customerRepository.save(customerEntity);
-        customerDto.setId(customerEntity.getCustomerId());
+        CustomerEntity newCustomerEntity = customerRepository.save(customerEntity);
 
-        return customerDto;
+        return objectEntityMapsToObjectDto(newCustomerEntity);
     }
 
     @Override
@@ -70,21 +67,19 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             customerRepository.deleteById(id);
         } catch (EntityNotFoundException ex) {
-            logger.error("Error in CustomerServiceImpl", ex);
+            logger.error("Error in CustomerServiceImpl: ", ex);
         }
     }
 
 
     public CustomerDto objectEntityMapsToObjectDto(CustomerEntity objectEntity) {
-        CustomerDto customerDto = mapperFactory.map(objectEntity, CustomerDto.class);
 
-        return customerDto;
+        return mapperFactory.map(objectEntity, CustomerDto.class);
     }
 
     public CustomerEntity objectDtoMapsToObjectEntity(CustomerDto objectDto) {
-        CustomerEntity customerEntity = mapperFactory.map(objectDto, CustomerEntity.class);
 
-        return customerEntity;
+        return mapperFactory.map(objectDto, CustomerEntity.class);
     }
 
 }
