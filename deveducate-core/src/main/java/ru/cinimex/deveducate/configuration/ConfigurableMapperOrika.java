@@ -31,19 +31,10 @@ public class ConfigurableMapperOrika extends ConfigurableMapper {
                 .field("id", "sellerId")
                 .field("name", "sellerName")
                 .field("updateOn", "expiresOn")
-                .field("password", "password")
-                .field("createOn", "createOn")
-                .field("quota", "quota")
-                .field("product", "product")
-                .field("adminUser", "adminUser")
-                .register();
+                .byDefault().register();
         factory.classMap(OrderEntity.class, OrderDto.class)
                 .field("orderId", "id")
-                .field("orderTimestamp", "orderTimestamp")
-                .field("orderTotal", "orderTotal")
-                .field("seller", "seller")
-                .field("customer", "customer")
-                .register();
+                .byDefault().register();
     }
 
 }

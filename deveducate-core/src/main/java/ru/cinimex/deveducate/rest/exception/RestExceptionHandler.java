@@ -25,67 +25,43 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {EntityNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorMessage entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-        return new ErrorMessage(
-                "Покупатель не найден! " + ex.getMessage()
-        );
+        return createErrorMessage(ex,request,"Объект не найден! ");
     }
 
     @ExceptionHandler(value = {ValidationException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage badRequestException(ValidationException ex, WebRequest request) {
-        return new ErrorMessage(
-                "Некорректный запрос! " + ex.getMessage()
-        );
+        return createErrorMessage(ex,request,"Некорректный запрос! ");
     }
 
     @ExceptionHandler(value = {ServerErrorException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage internalServerException(ServerErrorException ex, WebRequest request) {
-        return new ErrorMessage(
-                "Ошибка сервера!" + ex.getMessage() +
-                        GETLOCALIZED_MESSAGE + ex.getLocalizedMessage() +
-                        STACK_TRACE + Arrays.toString(ex.getStackTrace()) +
-                        REQUEST + request.getContextPath() +
-                        DESCRIPTION + request.getDescription(false) +
-                        PARAMETERS + request.getParameterMap() +
-                        PARAMETER_NAMES + request.getParameterNames()
-        );
+        return createErrorMessage(ex,request,"Ошибка сервера! ");
     }
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage exception(Exception ex, WebRequest request) {
-        return new ErrorMessage(
-                "Неизвестная ошибка сервера! " + ex.getMessage() +
-                GETLOCALIZED_MESSAGE + ex.getLocalizedMessage() +
-                STACK_TRACE + Arrays.toString(ex.getStackTrace()) +
-                REQUEST + request.getContextPath() +
-                DESCRIPTION + request.getDescription(false) +
-                PARAMETERS + request.getParameterMap() +
-                PARAMETER_NAMES + request.getParameterNames()
-        );
+        return createErrorMessage(ex,request,"Неизвестная ошибка сервера! ");
     }
-
 
     @ExceptionHandler(value = {UnsupportedOperationException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage unsupportedOperationException(UnsupportedOperationException ex, WebRequest request) {
-        return new ErrorMessage(
-                "Операция не поддерживается! " + ex.getMessage() +
-                        GETLOCALIZED_MESSAGE + ex.getLocalizedMessage() +
-                        STACK_TRACE + Arrays.toString(ex.getStackTrace()) +
-                        REQUEST + request.getContextPath() +
-                        DESCRIPTION + request.getDescription(false) +
-                        PARAMETERS + request.getParameterMap() +
-                        PARAMETER_NAMES + request.getParameterNames()
-        );
+        return createErrorMessage(ex,request,"Операция не поддерживается! ");
     }
 
     @ExceptionHandler(value = {IllegalStateException.class})
     @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
     public ErrorMessage illegalStateException(IllegalStateException ex, WebRequest request) {
+        return createErrorMessage(ex,request,"Неизвестное исключение! ");
+    }
+
+    private <T extends Exception> ErrorMessage createErrorMessage(T ex, WebRequest request, String message){
+
         return new ErrorMessage(
-                "Неизвестное исключение! " + ex.getMessage() +
+                message + ex.getMessage() +
                         GETLOCALIZED_MESSAGE + ex.getLocalizedMessage() +
                         STACK_TRACE + Arrays.toString(ex.getStackTrace()) +
                         REQUEST + request.getContextPath() +
@@ -94,5 +70,4 @@ public class RestExceptionHandler {
                         PARAMETER_NAMES + request.getParameterNames()
         );
     }
-
 }

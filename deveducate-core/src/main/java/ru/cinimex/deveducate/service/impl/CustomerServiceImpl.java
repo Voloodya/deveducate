@@ -9,6 +9,7 @@ import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.CustomerEntity;
 import ru.cinimex.deveducate.dal.repository.CustomerRepository;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
+import ru.cinimex.deveducate.service.ConvertObject;
 import ru.cinimex.deveducate.service.CustomerService;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, ConvertObject<CustomerEntity, CustomerDto> {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
@@ -58,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (id > 0) {
             return customerDto;
         } else {
-            return null;
+            throw new EntityNotFoundException();
         }
     }
 
@@ -68,15 +69,16 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.deleteById(id);
         } catch (EntityNotFoundException ex) {
             logger.error("Error in CustomerServiceImpl: ", ex);
+            throw new EntityNotFoundException();
         }
     }
 
-
+    @Override
     public CustomerDto objectEntityMapsToObjectDto(CustomerEntity objectEntity) {
 
         return mapperFactory.map(objectEntity, CustomerDto.class);
     }
-
+    @Override
     public CustomerEntity objectDtoMapsToObjectEntity(CustomerDto objectDto) {
 
         return mapperFactory.map(objectDto, CustomerEntity.class);

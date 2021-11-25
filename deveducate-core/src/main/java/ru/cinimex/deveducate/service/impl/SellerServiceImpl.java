@@ -64,6 +64,7 @@ public class SellerServiceImpl implements SellerService {
             sellerRepository.deleteById(id);
         }catch (Exception ex){
             logger.error("Error in the class SellerServiceImpl: ",ex);
+            throw new EntityNotFoundException();
         }
     }
 

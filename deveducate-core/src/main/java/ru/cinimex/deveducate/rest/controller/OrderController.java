@@ -70,16 +70,15 @@ public class OrderController {
     @DeleteMapping("{id}")
     public void remove(@PathVariable(value = "id") int id) throws ValidationException {
         if (id < 0) {
-            throw new ValidationException("");
+            throw new ValidationException("Поле id обязательно для заполнения.");
         }
         orderService.remove(id);
     }
 
     // http://localhost:8080/orders/pageable?page=2&size=2
     @GetMapping(path = "/pageable")
-    public Page<OrderDto> getPage(int page, int size) {
+    public Page<OrderDto> getPage(Pageable pageable) {
         int orderTotal = 5;
-        Pageable pageable = PageRequest.of(page - 1, size);
         return orderService.getSpecificPage(pageable, orderTotal);
     }
 
@@ -94,7 +93,7 @@ public class OrderController {
     // http://localhost:8080/orders/current
     @GetMapping(path = "/current")
     public List<OrderDto> getCurrentDate() {
-        return orderService.getCurrentDate();
+        return orderService.getByCurrentDate();
     }
 
     // http://localhost:8080/orders/customer?id=2

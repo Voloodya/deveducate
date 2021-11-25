@@ -24,7 +24,7 @@ public interface OrderService {
 
     Page<OrderDto> getSpecificPage(Pageable pageable, int orderTotal);
 
-    List<OrderDto> getCurrentDate();
+    List<OrderDto> getByCurrentDate();
 
     List<OrderDto> getByCustomer(Integer id);
 

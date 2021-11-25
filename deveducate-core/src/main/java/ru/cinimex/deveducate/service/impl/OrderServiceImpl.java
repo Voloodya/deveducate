@@ -96,10 +96,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getCurrentDate() {
+    public List<OrderDto> getByCurrentDate() {
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         Date date = new Date();
-        BooleanExpression isCurrentDate = qOrder.orderTimestamp.between(date, DateUtils.addDays(new Date(), 1));
+        BooleanExpression isCurrentDate = qOrder.orderTimestamp.between(date, DateUtils.addDays(date, 1));
         Iterable<OrderEntity> orderEntityList = orderRepository.findAll(isCurrentDate);
 
         return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
@@ -112,8 +112,9 @@ public class OrderServiceImpl implements OrderService {
         List<OrderEntity> orderEntityList = null;
         try {
             orderEntityList = (List<OrderEntity>) orderRepository.findAll(isCustomer);
-        } catch (Exception ex) {
+        } catch (NullPointerException ex) {
             logger.error("Исключение в методе getByCustomer: ", ex);
+            throw new NullPointerException();
         }
 
         return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
@@ -126,7 +127,6 @@ public class OrderServiceImpl implements OrderService {
         return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
     }
 
-
     @Override
     public OrderDto update(OrderDto orderDto) {
         // Для update через save: "OrderEntity orderEntity = orderRepository.findById(orderDto.getId()).orElseThrow(() -> new EntityNotFoundException());"
@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderService {
         if (count > 0) {
             return orderDto;
         } else {
-            return null;
+            throw new EntityNotFoundException();
         }
     }
 
@@ -145,7 +145,6 @@ public class OrderServiceImpl implements OrderService {
             orderRepository.deleteById(id);
         }catch (Exception ex){
             logger.error("Error in OrderServiceImpl: ", ex);
-
         }
     }
 

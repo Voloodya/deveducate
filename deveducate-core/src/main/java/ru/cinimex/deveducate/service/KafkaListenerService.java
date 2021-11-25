@@ -33,6 +33,7 @@ public class KafkaListenerService {
             concurrentHashMap.remove(id);
         } catch (Exception ex) {
             logger.error("Error in KafkaListenerService: ", ex);
+            throw new NullPointerException();
         }
         return customerDto;
     }
