@@ -21,7 +21,6 @@ import java.util.List;
 @Slf4j
 public class CustomerServiceImpl implements CustomerService, ConvertObject<CustomerEntity, CustomerDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final CustomerRepository customerRepository;
 
@@ -59,18 +58,13 @@ public class CustomerServiceImpl implements CustomerService, ConvertObject<Custo
         if (id > 0) {
             return customerDto;
         } else {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Объект не найден!");
         }
     }
 
     @Override
     public void remove(int id) {
-        try {
-            customerRepository.deleteById(id);
-        } catch (EntityNotFoundException ex) {
-            logger.error("Error in CustomerServiceImpl: ", ex);
-            throw new EntityNotFoundException();
-        }
+        customerRepository.deleteById(id);
     }
 
     @Override

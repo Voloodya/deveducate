@@ -45,7 +45,7 @@ public class OrderController {
         if (orderDto != null) {
             return orderService.save(orderDto);
         } else {
-            throw new ValidationException("");
+            throw new ValidationException("Объект не должен быть пустым!");
         }
     }
 
@@ -62,7 +62,7 @@ public class OrderController {
         if (orderDto != null && orderDto.getId() != null) {
             return orderService.update(orderDto);
         } else {
-            throw new ValidationException("");
+            throw new ValidationException("Объект и его id должны быть обязательно заполнены!");
         }
     }
 

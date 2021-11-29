@@ -7,13 +7,13 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import ru.cinimex.deveducate.rest.dto.CustomerDto;
 
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RequiredArgsConstructor
 @Service
 public class KafkaListenerService {
 
-    private final Logger logger = LoggerFactory.getLogger(KafkaListenerService.class);
     private final ConcurrentHashMap<Integer, CustomerDto> concurrentHashMap = new ConcurrentHashMap<>();
 
 
@@ -24,17 +24,11 @@ public class KafkaListenerService {
 
     }
 
-    public CustomerDto getCustomer(int id) {
+    public Optional<CustomerDto> getCustomer(int id) {
 
-        CustomerDto customerDto = null;
+        CustomerDto customerDto = concurrentHashMap.get(id);
 
-        try {
-            customerDto = concurrentHashMap.get(id);
-            concurrentHashMap.remove(id);
-        } catch (Exception ex) {
-            logger.error("Error in KafkaListenerService: ", ex);
-            throw new NullPointerException();
-        }
-        return customerDto;
+        concurrentHashMap.remove(id);
+        return Optional.ofNullable(customerDto);
     }
 }

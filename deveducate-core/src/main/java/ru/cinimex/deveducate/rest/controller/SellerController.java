@@ -38,7 +38,7 @@ public class SellerController {
     @PostMapping()
     public SellerDto save(@RequestBody SellerDto sellerDto) throws ValidationException {
         if (sellerDto == null) {
-            throw new ValidationException("");
+            throw new ValidationException("Объект не должен быть пустым!");
         }
         return sellerService.save(sellerDto);
     }
@@ -55,7 +55,7 @@ public class SellerController {
         if (sellerDto != null && sellerDto.getId() != null) {
             return sellerService.update(sellerDto);
         } else {
-            throw new ValidationException("");
+            throw new ValidationException("Объект и его id должны быть обязательно заполнены!");
         }
     }
 

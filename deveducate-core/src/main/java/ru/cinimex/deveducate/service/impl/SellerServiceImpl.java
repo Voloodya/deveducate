@@ -8,6 +8,7 @@ import ru.cinimex.deveducate.configuration.ConfigurableMapperOrika;
 import ru.cinimex.deveducate.dal.entity.SellerEntity;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
 import ru.cinimex.deveducate.rest.dto.SellerDto;
+import ru.cinimex.deveducate.service.ConvertObject;
 import ru.cinimex.deveducate.service.SellerService;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,9 +18,8 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class SellerServiceImpl implements SellerService {
+public class SellerServiceImpl implements SellerService, ConvertObject<SellerEntity,SellerDto> {
 
-    private static final Logger logger = LoggerFactory.getLogger(SellerServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final SellerRepository sellerRepository;
 
@@ -60,12 +60,7 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public void remove(int id) {
-        try {
-            sellerRepository.deleteById(id);
-        }catch (Exception ex){
-            logger.error("Error in the class SellerServiceImpl: ",ex);
-            throw new EntityNotFoundException();
-        }
+        sellerRepository.deleteById(id);
     }
 
     public SellerDto objectEntityMapsToObjectDto(SellerEntity objectEntity) {

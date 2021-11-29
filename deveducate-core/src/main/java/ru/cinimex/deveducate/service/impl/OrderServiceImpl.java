@@ -21,6 +21,7 @@ import ru.cinimex.deveducate.dal.repository.OrderRepository;
 import ru.cinimex.deveducate.dal.repository.SellerRepository;
 import ru.cinimex.deveducate.rest.dto.OrderDto;
 import ru.cinimex.deveducate.rest.filter.OrderSpecification;
+import ru.cinimex.deveducate.service.ConvertObject;
 import ru.cinimex.deveducate.service.OrderService;
 
 import javax.persistence.EntityNotFoundException;
@@ -32,10 +33,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService, ConvertObject<OrderEntity, OrderDto> {
 
     private static final int NUMBERTOTAL = 10;
-    private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
     private final ConfigurableMapperOrika mapperFactory;
     private final OrderRepository orderRepository;
     private final SellerRepository sellerRepository;
@@ -109,13 +109,7 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getByCustomer(Integer id) {
         QOrderEntity qOrder = QOrderEntity.orderEntity;
         BooleanExpression isCustomer = qOrder.customer.customerId.eq(id);
-        List<OrderEntity> orderEntityList = null;
-        try {
-            orderEntityList = (List<OrderEntity>) orderRepository.findAll(isCustomer);
-        } catch (NullPointerException ex) {
-            logger.error("Исключение в методе getByCustomer: ", ex);
-            throw new NullPointerException();
-        }
+        List<OrderEntity> orderEntityList =(List<OrderEntity>) orderRepository.findAll(isCustomer);
 
         return mapperFactory.mapAsList(orderEntityList, OrderDto.class);
     }
@@ -134,18 +128,14 @@ public class OrderServiceImpl implements OrderService {
         if (count > 0) {
             return orderDto;
         } else {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Объект не найден!");
         }
     }
 
 
     @Override
     public void remove(int id) {
-        try {
-            orderRepository.deleteById(id);
-        }catch (Exception ex){
-            logger.error("Error in OrderServiceImpl: ", ex);
-        }
+        orderRepository.deleteById(id);
     }
 
     public OrderDto objectEntityMapsToObjectDto(OrderEntity objectEntity) {

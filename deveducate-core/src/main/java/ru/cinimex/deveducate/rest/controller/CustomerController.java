@@ -51,7 +51,7 @@ public class CustomerController {
     public CustomerDto update(@RequestBody CustomerDto customerDto) throws ValidationException {
 
         if (customerDto == null || customerDto.getId() == null) {
-            throw new ValidationException("Поле id обязательно");
+            throw new ValidationException("Объект и его id должны быть обязательно заполнены!");
         }
         return customerService.update(customerDto);
     }
