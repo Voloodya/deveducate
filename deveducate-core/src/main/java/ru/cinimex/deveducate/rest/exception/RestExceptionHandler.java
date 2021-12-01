@@ -1,5 +1,6 @@
 package ru.cinimex.deveducate.rest.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.xml.bind.ValidationException;
 import java.util.Arrays;
 
+@Slf4j
 @RestControllerAdvice
 public class RestExceptionHandler {
 
@@ -25,36 +27,42 @@ public class RestExceptionHandler {
     @ExceptionHandler(value = {EntityNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorMessage entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+        log.error("Ошибка на запросе {}: {}",request.getContextPath(),ex);
         return createErrorMessage(ex,request,"Объект не найден! ");
     }
 
     @ExceptionHandler(value = {ValidationException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorMessage badRequestException(ValidationException ex, WebRequest request) {
+        log.error("Ошибка на запросе {}: {}",request.getContextPath(),ex);
         return createErrorMessage(ex,request,"Некорректный запрос! ");
     }
 
     @ExceptionHandler(value = {ServerErrorException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage internalServerException(ServerErrorException ex, WebRequest request) {
+        log.error("Ошибка на запросе {}: {}",request.getContextPath(),ex);
         return createErrorMessage(ex,request,"Ошибка сервера! ");
     }
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage exception(Exception ex, WebRequest request) {
+        log.error("Ошибка на запросе {}: {}",request.getContextPath(),ex);
         return createErrorMessage(ex,request,"Неизвестная ошибка сервера! ");
     }
 
     @ExceptionHandler(value = {UnsupportedOperationException.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorMessage unsupportedOperationException(UnsupportedOperationException ex, WebRequest request) {
+        log.error("Ошибка на запросе {}: {}",request.getContextPath(),ex);
         return createErrorMessage(ex,request,"Операция не поддерживается! ");
     }
 
     @ExceptionHandler(value = {IllegalStateException.class})
     @ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
     public ErrorMessage illegalStateException(IllegalStateException ex, WebRequest request) {
+        log.error("Ошибка на запросе {}: {}",request.getContextPath(),ex);
         return createErrorMessage(ex,request,"Неизвестное исключение! ");
     }
 
