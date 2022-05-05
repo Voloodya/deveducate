@@ -36,4 +36,5 @@ public class KafkaController {
         Optional<CustomerDto> customer = kafkaListener.getCustomer(id);
         return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
 }
