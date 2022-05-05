@@ -1,0 +1,55 @@
+<configuration debug="true">
+    <contextName>appDeveducateLog</contextName>
+
+    <!-- Block with appenders (приложения регистраторы) -->
+    <!-- The name attribute specifies the name of the appender whereas the class attribute specifies the fully qualified name-->
+    <!-- of the appender class to instantiate.-->
+    <appender name="FILE_APP" class="ch.qos.logback.core.FileAppender">
+        <file>deveducateApp.log</file>
+    <!-- The <encoder> element takes a mandatory class attribute specifying the fully qualified name of the encoder class to instantiate.-->
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file : %line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_SERVICES" class="ch.qos.logback.core.FileAppender">
+        <file>deveducateServices.log</file>
+    <!-- The <encoder> element takes a mandatory class attribute specifying the fully qualified name of the encoder class to instantiate.-->
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file : %line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_CONTROLLERS" class="ch.qos.logback.core.FileAppender">
+        <file>deveducateControllers.log</file>
+        <encoder>
+            <pattern>%date %level [%thread] %logger{10} [%file : %line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Block with loggers (регистраторы) -->
+    <!--level attribute admitting one of the case-insensitive string values TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF-->
+    <!-- The <logger> element may contain zero or more <appender-ref> elements; each appender thus referenced is added to the named logger.-->
+    <logger name="ru.cinimex.deveducate.service" level="DEBUG" additivity="false">
+        <appender-ref ref="FILE_SERVICES" />
+    </logger>
+    <logger name="ru.cinimex.deveducate.rest" level="ERROR" additivity="false">
+        <appender-ref ref="FILE_CONTROLLERS"/>
+    </logger>
+    <logger name="ru.cinimex.deveducate.DeveducateCoreApplication" level="ERROR" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- Root logger. The <root> element configures the root logger. -->
+    <!-- The value of the level attribute can be one of the case-insensitive strings TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF.
+     Note that the level of the root logger cannot be set to INHERITED or NULL.-->
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE_SERVICES"/>
+        <appender-ref ref="FILE_CONTROLLERS"/>
+        <appender-ref ref="FILE_APP"/>
+    </root>
+</configuration>

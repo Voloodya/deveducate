@@ -1,0 +1,18 @@
+plugins {
+    id "org.sonarqube" version "3.0"
+}
+
+group = 'ru.cinimex'
+version = '0.0.1-SNAPSHOT'
+
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}

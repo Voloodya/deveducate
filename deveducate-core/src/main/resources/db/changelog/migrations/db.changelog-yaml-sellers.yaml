@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-sellers
+      author: vlutsenko
+      preConditions:
+        - onFail: HALT
+          not:
+            tableExists:
+              tableName: sellers
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    unique: true
+                    primaryKeyName: seller_pkey
+                  name: SELLER_ID
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: SELLER_NAME
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: true
+                  name: PASSWORD
+                  type: VARCHAR(400)
+              - column:
+                  constraints:
+                    nullable: true
+                  name: CREATE_ON
+                  type: TIMESTAMP
+              - column:
+                  constraints:
+                    nullable: true
+                  name: QUOTA
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: PRODUCT
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: true
+                  name: EXPIRES_ON
+                  type: TIMESTAMP
+              - column:
+                  constraints:
+                    nullable: true
+                  name: ADMIN_USER
+                  type: TEXT
+            tableName: sellers

@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    platform: postgres
+    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
+    #url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
+    username: 'vlutsenko'
+    password: 'vlutsenko'
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    generate-ddl: false
+    hibernate.ddl-auto: none
+    hibernate.use-new-id-generator-mappings: false
+  liquibase:
+    enabled: true
+    #change-log: 'classpath: db/changelog/db.changelog-master.yaml'
+    url: 'jdbc:postgresql://devedu-01.vm.cmx.ru:5432/postgres?currentSchema=vlutsenko'
+    #url: 'jdbc:postgresql://localhost:5432/postgres?currentSchema=vlutsenko'
+    user: 'vlutsenko'
+    password: 'vlutsenko'
+
+  kafka:
+    bootstrap-servers: devedu-01.vm.cmx.ru:9092
+    consumer:
+      group-id: group_vlutsenko
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  logging:
+    level:
+      com.querydsl.sql: DEBUG
+      org.hibernate.SQL: DEBUG
+

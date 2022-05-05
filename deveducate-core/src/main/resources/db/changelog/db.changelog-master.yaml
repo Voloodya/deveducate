@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/db.changelog-yaml-sellers.yaml
+  - include:
+      file: db/changelog/migrations/db.changelog-yaml-customers.yaml
+  - include:
+      file: db/changelog/migrations/db.changelog-yaml-orders.yaml
+  - include:
+      file: db/changelog/migrations/db.changelog-yaml-load.yaml
